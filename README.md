@@ -1,8 +1,10 @@
 # Project Name
 
+Billy
+
 ## Description
 
-Describe your project in one/two lines.
+Generate bills dynamically and convert them to pdf
 
 ## User Stories
 
@@ -10,28 +12,27 @@ Describe your project in one/two lines.
 -  **Signup:** As an anon I can sign up in the platform so that I can start saving favorite restaurants
 -  **Login:** As a user I can login to the platform so that I can see my favorite restaurants
 -  **Logout:** As a user I can logout from the platform so no one else can use it
--  **Add Restaurants** As a user I can add a restaurant so that I can share it with the community
--  **List Restaurants** As a user I want to see the restaurants so that I can choose one to eat
--  **Search Restaurants** As a user I want to search restaurants by name so that I know if it´s already in the platform
--  **Add to favorites** As a user I want to add a restaurant to favorite so that I can save the restaurants that I liked the most
--  **See my favorites** As a user I want to see my favorite restaurantes so that I can see the ones I liked the most
+-  **Add Bill** As a user I want to add a bill to the client
+-  **List Bills** As a user I want to list the bills from each client
+-  **Search Bill** As a user I want to search by REF the bill
+-  **Print Bill in PDF** As a user I want to print the bill in pdf format
+ 
 
 ## Backlog
 
-User profile:
-- see my profile
-- upload my profile picture
-- see other users profile
-- list of events created by the user
-- list events the user is attending
+Clients:
+- Add client
+- List clients
+- Save client's bills
+- Insert client's info on new bills
 
-Geo Location:
-- add geolocation to events when creating
-- show event in a map in event detail page
-- show all events in a map in the event list page
+Services
+- Presaved services
 
-Homepage:
-- ...
+Extra types of doc:
+- Create new type of document
+- Add new template
+
   
 # Client
 
@@ -42,7 +43,8 @@ Homepage:
 | `/` | true | landing page |
 | `/signup` | true | Signup user |
 | `/login` | true | login user |
-| `/profile` | false | profile of user |
+| `/bills` | false | list of bills |
+| `/new` | false | create bill |
 
 ## Services
 
@@ -52,13 +54,13 @@ Homepage:
   - auth.logout()
   - auth.me()
   - auth.getUser() // synchronous
-- Restaurant Service
-  - restaurant.list()
-  - restaurant.search(terms)
-  - restaurant.create(data)
-  - restaurant.detail(id)
-  - restaurant.addFavorite(id)
-  - restaurant.removeFavorite(id)   
+- Documents Service
+  - doc.listBill()
+  - doc.search(ref)
+  - doc.createBill(data)
+  - doc.detailBill(id)
+  - doc.remove(id)   
+  - doc.print(id)
 
 # Server
 
@@ -68,18 +70,32 @@ User model
 
 ```
 username - String // required
-email - String // required & unique
 password - String // required
-favorites - [ObjectID<Restaurant>]
 ```
 
-Restaurant model
+Doc model
 
 ```
-owner - ObjectID<User> // required
-name - String // required
-phone - String
-address - String
+ref - String // required
+type - String // required
+data:{
+  client:{
+    name - String
+    nif - String // required
+    address:{
+      street- String // required
+      number - Number // required
+      postalCode - Number // required
+      country - String // required
+    }  
+  }
+  services - [{
+    name - String
+    units - Number
+    priceUnit - Number
+  }]
+}
+
 ```
 
 ## API Endpoints (backend routes)
@@ -93,21 +109,31 @@ address - String
 |POST|api/auth/signup|Log in user to app and set user to session (Body: username, password)|
 |POST|api/auth/login|Register user to app and set user to session (Body: username, password)|
 |POST|api/auth/logout|Log out user from app and remove session|
+
+### documents
+|Method|Route|Functionality|
+|---|---|---|
+|POST|api/doc/add(type)|Create a document|
+|GET|api/doc/get|List documents|
+|GET|api/doc/get(id)|Get data from item|
+|POST|api/doc/update(id)|Get data from item|
+|POST|api/doc/delete|Delete document|
+|GET|api/doc/print(id)|Print bill|
   
 
 ## Links
 
 ### Trello/Kanban
 
-[Link to your trello board](https://trello.com) or picture of your physical board
+[Link to your trello board](https://trello.com/b/jsWoyYen/docgest) or picture of your physical board
 
 ### Git
 
 The url to your repository and to your deployed project
 
-[Client repository Link](https://github.com/Ironhack-PartTime-BCN/boilerplate-frontend-module-3)
+[Client repository Link](https://github.com/monicalopezgris/frontend-billy)
 
-[Server repository Link](https://github.com/Ironhack-PartTime-BCN/boilerplate-backend-module-3)
+[Server repository Link](https://github.com/monicalopezgris/backend-billy)
 
 [Deploy Link Backend](http://heroku.com)
 
@@ -117,4 +143,4 @@ The url to your repository and to your deployed project
 
 The url to your presentation slides
 
-[Slides Link](http://slides.com)
+[Slides Link](https://slides.com/monicalopez-5/doc)
