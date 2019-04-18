@@ -10,7 +10,7 @@ export const withAuth = Comp => {
       return (
         <Consumer>
           {authStore => {
-            retauthStoreurn (
+            return (
               <Comp
                 login={authStore.login}
                 signup={authStore.signup}

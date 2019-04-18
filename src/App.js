@@ -5,12 +5,17 @@ import Navbar from "./components/Navbar";
 import Private from "./pages/Private";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Dash from './pages/Dash';
+import Bill from './pages/Bill';
 
 import PrivateRoute from "./components/PrivateRoute";
 import AnonRoute from "./components/AnonRoute";
 import AuthProvider from "./lib/AuthProvider";
 
 class App extends Component {
+  state={
+    aa:[]
+  }
   render() {
     return (
       <AuthProvider>
@@ -21,6 +26,8 @@ class App extends Component {
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
             <PrivateRoute path="/private" component={Private} />
+            <PrivateRoute path="/dash" component={Dash} />
+            <PrivateRoute path="/bill" component={Bill} />
           </Switch>
         </div>
       </AuthProvider>
