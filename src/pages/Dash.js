@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Route, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { withAuth } from '../lib/AuthProvider';
 import BillList from '../components/BillList';
 // import BillAddForm from '../components/BillAddForm';
@@ -14,7 +14,7 @@ class Dash extends Component {
     return (
       <>
         <BillList />
-        <button type="button">Add</button>
+        <Link to ='/bill'><button type="button">Add</button></Link>
       </>
     );
   }

@@ -1,34 +1,39 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import BillForm from '../components/BillForm';
-import docService from '../lib/doc-service'
+import BillSlide from '../components/BillSlide';
+import { withDoc } from '../lib/DocProvider';
+import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
+
 
 class Bill extends Component {
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = null;
   }
-
-  onChange = (e) => {
-    const { target } = e;
-    const { name } = target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({
-      [name]: value,
-    });
-  }
-
-  onSubmit = () => {
-    if(this.state){
-      docService.get()
-      docService.add(this.state)
-    }
+  
+  exportPDF = () => {
+    this.bill.save();
   }
 
   render() {
     return (
-      <BillForm onSubmit={this.onSubmit} onChange={this.onChange} />
+      <>
+        <Link to='/dash'><button type="button">Dash</button></Link>
+        <BillForm
+            onPrint={this.onPrint}
+            formState={this.state}
+          />
+        <PDFExport paperSize={'Letter'}
+          fileName="bill.pdf"
+          ref={(r) => this.bill = r}>
+          <BillSlide />
+        </PDFExport>
+        
+        <button onClick={this.exportPDF}>download</button>
+      </>
     );
   }
 }
 
-export default Bill;
+export default withDoc(Bill);

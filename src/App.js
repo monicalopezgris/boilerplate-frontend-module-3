@@ -11,6 +11,7 @@ import Bill from './pages/Bill';
 import PrivateRoute from "./components/PrivateRoute";
 import AnonRoute from "./components/AnonRoute";
 import AuthProvider from "./lib/AuthProvider";
+import DocProvider from "./lib/DocProvider"
 
 class App extends Component {
   state={
@@ -19,8 +20,9 @@ class App extends Component {
   render() {
     return (
       <AuthProvider>
+        <DocProvider>
         <div className="container">
-          <h1>Basic React Authentication</h1>
+        <h1>Billy</h1>
           <Navbar />
           <Switch>
             <AnonRoute path="/signup" component={Signup} />
@@ -30,6 +32,7 @@ class App extends Component {
             <PrivateRoute path="/bill" component={Bill} />
           </Switch>
         </div>
+        </DocProvider>
       </AuthProvider>
     );
   }

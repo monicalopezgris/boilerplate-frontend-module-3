@@ -3,7 +3,7 @@ import axios from 'axios';
 class Auth {
   constructor() {
     this.auth = axios.create({
-      baseURL: "http://localhost:5000",
+      baseURL: "https://billydoc.herokuapp.com/",
       withCredentials: true
     });
   }

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { withDoc } from '../lib/DocProvider';
 
 class BillListItem extends Component {
   constructor(props) {
@@ -7,21 +9,30 @@ class BillListItem extends Component {
   }
 
   handleClick(id) {
-    this.props.onDelete(id);
+    this.props.delete(id)
+  }
+
+  handleCurrent(data) {
+    this.props.storeCurrent(data)
+
+    setTimeout(() => {
+      this.props.history.push('/bill');
+    }, 500);
   }
 
   render() {
-    const { data } = this.props;
-    const { _id } = data;
+    const { itemData } = this.props;
+    const { _id } = itemData;
     return (
       <div>
-        <button type="button" onClick={() => { this.handleClick(_id); }}> Delete </button>
-        <span> {data.ref} </span>
-        <span>| {data.type}</span>
-        <span>| {data.created_at}</span>
+        <button type="button" onClick={() => { this.handleClick(_id); }}> Delete </button>        
+        <div onClick={() => { this.handleCurrent(itemData); }}>
+          <span> {itemData.data.client.name} </span>
+          <span>| {itemData.data.client.nif}</span>
+        </div>
       </div>
     );
   }
 }
 
-export default BillListItem;
+export default withRouter(withDoc(BillListItem));
