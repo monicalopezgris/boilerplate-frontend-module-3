@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field } from 'formik';
 import { withDoc } from '../lib/DocProvider';
+import BillFormList from './BillFormList';
 
 class BillForm extends Component {
   constructor(props) {
@@ -16,27 +17,22 @@ class BillForm extends Component {
 
   handleInputChange = (e) => {
     const {onChange} = this.props;
-    onChange(e)
+    onChange(e);
   }
 
   handleSubmit = (values, update) => {
-    const {onSubmit} = this.props
-    onSubmit(values, update)
+    const {onSubmit} = this.props;
+    const {items} = this.state;
+    onSubmit(values, items, update);
   }
 
   calcPrice = (units, price) => {
     return units * price;
   }
 
-  addItem = (item, units, priceUnit) => {
+  handleAdd = (values) => {
     const newArr = this.state.items
-    newArr.push(
-      {
-        item,
-        units,
-        priceUnit,
-      }
-    )
+    newArr.push(values)
     this.setState({
       items:newArr,
     })
@@ -51,6 +47,7 @@ class BillForm extends Component {
       <Formik
       initialValues={data}
       onSubmit={(values, actions) => {
+        actions.setSubmitting(false);
         let update= false
         if (data) {
           update=true
@@ -66,15 +63,11 @@ class BillForm extends Component {
           <Field type="number" name="streetNum" placeholder="streetNum" />
           <Field type="number" name="postalCode" placeholder="postalCode" />
           <Field type="text" name="country" placeholder="country" />
-
-          {/* <Field type="text" name="item" placeholder="item" />
-          <Field type="number" name="units" placeholder="units" />
-          <Field type="number" name="priceUnit" placeholder="priceUnit" /> */}
           <button type="submit">Submit</button>
         </form>
       )}
-    />
-        
+      />
+      <BillFormList items={data?data.items:null}/>
       </>
     );
   }

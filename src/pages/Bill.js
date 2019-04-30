@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BillForm from '../components/BillForm';
 import BillSlide from '../components/BillSlide';
 import { withDoc } from '../lib/DocProvider';
-import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
+import { PDFExport } from '@progress/kendo-react-pdf';
 
 
 class Bill extends Component {
