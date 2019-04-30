@@ -5,6 +5,15 @@ import { withDoc } from '../lib/DocProvider'
 
 
 class BillList extends Component {
+  state = {
+    bills:[]
+  }
+
+  async componentDidMount() {
+    const {get} = this.props;
+    await get()
+  };
+
   render() {
     const { bills } = this.props;
     return (bills.map(bill => <BillListItem key={bill._id} itemData={bill} />)

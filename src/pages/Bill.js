@@ -20,10 +20,7 @@ class Bill extends Component {
     return (
       <>
         <Link to='/dash'><button type="button">Dash</button></Link>
-        <BillForm
-            onPrint={this.onPrint}
-            formState={this.state}
-          />
+        <BillForm />
         <PDFExport paperSize={'Letter'}
           fileName="bill.pdf"
           ref={(r) => this.bill = r}>

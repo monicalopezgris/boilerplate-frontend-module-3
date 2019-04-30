@@ -80,7 +80,8 @@ class AuthProvider extends Component {
           user
         });
       })
-      .catch(() => {});
+      .catch(() => {
+      });
   };
 
   logout = () => {
@@ -96,9 +97,7 @@ class AuthProvider extends Component {
   };
   render() {
     const { isLoading, isLoggedin, user } = this.state;
-    return isLoading ? (
-      <div>Loading</div>
-    ) : (
+    return isLoading ? <div>loading</div>:(
       <Provider
         value={{
           isLoggedin,

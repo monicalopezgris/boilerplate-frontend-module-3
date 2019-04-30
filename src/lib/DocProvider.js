@@ -13,6 +13,7 @@ export const withDoc = Comp => {
           {docStore => {
             return (
               <Comp
+                get={docStore.get}
                 bills={docStore.state.bills}
                 state={docStore.state}
                 add={docStore.add}
@@ -36,21 +37,30 @@ class DocProvider extends Component {
     isLoading: true,
     bills: [],
     current:{},
+    doc,
   };
 
-  async componentDidMount() {
-    const bills = await doc.get();
-    console.log(bills)
-    this.setState({ 
-      bills,
-      isLoading:false,
-     });
+  // async componentDidMount() {
+  //   await this.get()
+  // }
+
+  get = () => {
+    doc.get()
+    .then((data) => {
+      this.setState({
+        bills:data,
+        isLoading:false,
+      });
+    })
+    .catch((error) =>{
+      throw new Error(error);
+    })
   }
 
   add = (inputData) => {
     doc.add(inputData)
       .then((data) => {
-        this.setState({ 
+        this.setState({
           isLoading:false,
          });
       })
@@ -84,7 +94,7 @@ class DocProvider extends Component {
       })
   }
 
-  get = (id) => {
+  getOne = (id) => {
     doc.get(id)
       .then((data)=>{
         this.setState({
@@ -143,12 +153,10 @@ class DocProvider extends Component {
   }
 
   render() {
-    const { isLoading } = this.state;
-    return isLoading ? (
-      <div>Loading</div>
-    ) : (
+    return(
       <Provider
         value={{
+          get: this.get,
           state: this.state,
           add: this.add,
           update:this.update,

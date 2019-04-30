@@ -4,7 +4,7 @@ import axios from 'axios';
 class DocService {
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://billydoc.herokuapp.com/api/',
+      baseURL: `${process.env.REACT_APP_URL}/api`,
       withCredentials: true,
     });
   }
@@ -20,11 +20,12 @@ class DocService {
   }
 
   update(id, inputData) {
-    console.log('doc-service', inputData)
+    console.log('doc-service', inputData);
     return this.api.put(`/doc/${id}`, inputData)
       .then(({ data }) => {
-        console.log('saved', data)
-        return data; });
+        console.log('saved', data);
+        return data; 
+});
   }
 
   del(id) {
