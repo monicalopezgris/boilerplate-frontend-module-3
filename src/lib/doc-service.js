@@ -20,12 +20,10 @@ class DocService {
   }
 
   update(id, inputData) {
-    console.log('doc-service', inputData);
     return this.api.put(`/doc/${id}`, inputData)
       .then(({ data }) => {
-        console.log('saved', data);
         return data; 
-});
+  });
   }
 
   del(id) {

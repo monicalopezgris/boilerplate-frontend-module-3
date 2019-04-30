@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
 class Navbar extends Component {
   render() {
-    const { user, logout, isLoggedin } = this.props;
+    const { logout, isLoggedin } = this.props;
     return (
       <div>
         {isLoggedin ? (

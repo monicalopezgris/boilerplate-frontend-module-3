@@ -40,10 +40,6 @@ class DocProvider extends Component {
     doc,
   };
 
-  // async componentDidMount() {
-  //   await this.get()
-  // }
-
   get = () => {
     doc.get()
     .then((data) => {
@@ -111,7 +107,8 @@ class DocProvider extends Component {
     const {_id, ref, createdAt, updatedAt
       , data:{client:{name, nif, address:{street, streetNum, postalCode, country}}}
     } = data;
-    
+    const items = data.data.items;
+
     const current = Object.assign(this.state, {
       current: {
         _id,
@@ -124,32 +121,28 @@ class DocProvider extends Component {
         streetNum,
         postalCode,
         country,
+        items,
       }
     })
+
     this.setState({
       current
     });
+
   }
 
-  //UNUSED
-  // onChange = (e) => {
-  //   const { target } = e;
-  //   const { name } = target;
-  //   const value = target.value;
-  //   const newCurrent = Object.assign(this.state.current, {[name]: value})
-  //   this.setState({
-  //     current: newCurrent
-  //   });
-  //   console.log(this.state)
-  // }
-
-  onSubmit = (values, update) => {
+  onSubmit = (values, items, update) => {
     if (update) {
-      console.log('update data', values)
+      values.items=items;
       this.update(values._id, values)
     } else {
+      values.items=items;
       this.add(values)      
     }
+  }
+
+  onAdd = () => {
+//DOOOOO
   }
 
   render() {
