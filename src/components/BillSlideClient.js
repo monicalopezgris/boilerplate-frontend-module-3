@@ -8,15 +8,13 @@ class BillSlideClient extends Component {
   render() { 
     const data = this.props.state.current? this.props.state.current.current : null;
     return ( 
-      <div style={{  
-        border: '1px solid red',     
-        borderRadius: 1 }}>
+      <div>
 
-        <p>Name:{data? data.name:''}</p>
-        <p>Ref:{data? data.ref:''}</p>
-        <p>Street:{data? data.street:''}</p>
-        <p>Postal Code:{data? data.postalCode:''}</p>
-        <p>Country: {data? data.country:''}</p>
+        <p>{data? data.name:''}</p>
+        <p>{data? data.nif:''}</p>
+        <p>{data? data.street:''},{data? data.streetNum:''}</p>
+        <p>{data? data.postalCode:''}</p>
+        <p>{data? data.country:''}</p>
 
       </div>
      );

@@ -69,7 +69,7 @@ class DocProvider extends Component {
   update = (id, inputData) => {
     doc.update(id, inputData)
       .then((data) => {
-        this.setState({ 
+        this.setState({
           isLoading:false,
          });
       })
@@ -131,19 +131,14 @@ class DocProvider extends Component {
 
   }
 
-  onSubmit = (values, items, update) => {
+  onSubmit = (values, update) => {
     if (update) {
-      values.items=items;
       this.update(values._id, values)
     } else {
-      values.items=items;
       this.add(values)      
     }
   }
 
-  onAdd = () => {
-//DOOOOO
-  }
 
   render() {
     return(

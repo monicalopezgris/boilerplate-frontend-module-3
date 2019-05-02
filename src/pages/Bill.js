@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import BillForm from '../components/BillForm';
-import BillSlide from '../components/BillSlide';
+import BillSlide from './BillSlide';
 import { withDoc } from '../lib/DocProvider';
 import { PDFExport } from '@progress/kendo-react-pdf';
 

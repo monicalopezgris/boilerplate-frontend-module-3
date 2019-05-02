@@ -22,7 +22,6 @@ class BillForm extends Component {
 
   handleSubmit = (values, update) => {
     const {name, nif, street, number, postalCode, country} = values
-    let {items} = values;
     let aux = []
     for (let i = 0; i < values.item.length; i++) {
       aux.push(
@@ -43,9 +42,8 @@ class BillForm extends Component {
       items:aux
     }
 
-    console.log(finalValues)
     const { onSubmit } = this.props;
-    onSubmit(values, update);
+    onSubmit(finalValues, update);
   }
 
   calcPrice = (units, price) => {
@@ -80,12 +78,12 @@ class BillForm extends Component {
       }}
       render={({ values }) => (
         <Form>
-          <Field type="text" name="name" placeholder={`${values ? values.name : ''}`} />
-          <Field type="text" name="nif" placeholder={`${values ? values.nif : ''}`} />
-          <Field type="text" name="street" placeholder={`${values ? values.street : ''}`} />
-          <Field type="number" name="streetNum" placeholder={`${values ? values.streetNum : ''}`} />
-          <Field type="number" name="postalCode" placeholder={`${values ? values.postalCode : ''}`} />
-          <Field type="text" name="country" placeholder={`${values ? values.country : ''}`} />
+          <Field type="text" name="name" placeholder={`${values && values.name!= undefined ? values.name : 'name'}`} />
+          <Field type="text" name="nif" placeholder={`${values && values.nif!= undefined  ? values.nif : 'nif'}`} />
+          <Field type="text" name="street" placeholder={`${values && values.street!= undefined  ? values.street : 'street'}`} />
+          <Field type="number" name="streetNum" placeholder={`${values && values.streetNum!= undefined  ? values.streetNum : 'Number'}`} />
+          <Field type="number" name="postalCode" placeholder={`${values && values.postalCode!= undefined  ? values.postalCode : 'Postal Code'}`} />
+          <Field type="text" name="country" placeholder={`${values && values.country!= undefined  ? values.country : 'Country'}`} />
 
           <FieldArray
             name="items"
@@ -95,9 +93,12 @@ class BillForm extends Component {
                   values.items.map((item, index) => (
                     <div key={index}>
                       {/* <Field name={} /> */}
+                      <span>Item</span>
                       <Field name={`item.${index}`} placeholder={item.item} />
-                      <Field name={`units.${index}`} placeholder={item.units} />
-                      <Field name={`priceUnit.${index}`} placeholder={item.priceUnit} />
+                      <span>Units</span>
+                      <Field type='number' name={`units.${index}`} placeholder={item.units} />
+                      <span>Price Unit</span>
+                      <Field type='number' name={`priceUnit.${index}`} placeholder={item.priceUnit} />
                       <button
                         type="button"
                         onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
@@ -107,12 +108,6 @@ class BillForm extends Component {
                       <button
                         type="button"
                         onClick={() => arrayHelpers.insert(index, '')}
-                        // onClick={() => arrayHelpers.push(
-                        //   {"item":values.item[index],
-                        //    "units":values.units[index],
-                        //    "priceUnits":values.priceUnit[index],
-                        //   }
-                        //   )} 
                       >
                         +
                       </button>
