@@ -14,9 +14,6 @@ import AuthProvider from "./lib/AuthProvider";
 import DocProvider from "./lib/DocProvider"
 
 class App extends Component {
-  state={
-    aa:[]
-  }
   render() {
     return (
       <AuthProvider>
@@ -27,8 +24,8 @@ class App extends Component {
           <Switch>
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
-            <PrivateRoute path="/" component={Dash} />
             <PrivateRoute path="/bill" component={Bill} />
+            <PrivateRoute path="/" component={Dash} />
           </Switch>
         </div>
         </DocProvider>
