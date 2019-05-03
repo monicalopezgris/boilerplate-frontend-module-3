@@ -31,7 +31,7 @@ class BillForm extends Component {
 
   handleSubmit = (values, update) => {
     const { onSubmit } = this.props;
-    const { name, nif, street, number, postalCode, country } = values
+    const { _id:id, name, nif, street, number, postalCode, country } = values
 
     let aux = []
     if (values.item) {
@@ -48,6 +48,7 @@ class BillForm extends Component {
     }
 
     const finalValues = {
+      id,
       name,
       nif,
       street,
@@ -69,10 +70,7 @@ class BillForm extends Component {
           }
           onSubmit={(values, actions) => {
             actions.setSubmitting(false);
-            let update = false
-            if (current) {
-              update = true
-            }
+            const update = current ? true: false;
             this.handleSubmit(values, update)
           }}
           render={({ values }) => (
@@ -92,7 +90,6 @@ class BillForm extends Component {
                     {values.items && values.items.length > 0 ? (
                       values.items.map((item, index) => (
                         <div key={index}>
-                          {/* <Field name={} /> */}
                           <span>Item</span>
                           <Field name={`item.${index}`} placeholder={item.item} />
                           <span>Units</span>
@@ -102,22 +99,13 @@ class BillForm extends Component {
                           <button
                             type="button"
                             onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                          >
-                            -
-                      </button>
-                          <button
-                            type="button"
-                            onClick={() => arrayHelpers.insert(index, '')}
-                          >
-                            +
-                      </button>
+                          > - </button>
                         </div>
-                      ))
-                    ) : (
-                        <button type="button" onClick={(index) => arrayHelpers.insert(index, '')}>
-                          Add an item
-                  </button>
-                      )}
+                      )) 
+                    ):<div></div>}
+                    <button type="button" onClick={(index) => arrayHelpers.insert(index, '')}>
+                        Add an item
+                    </button>
                     <div>
                       <button type="submit">Submit</button>
                     </div>

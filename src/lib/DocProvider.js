@@ -54,17 +54,16 @@ class DocProvider extends Component {
   }
 
   add = (inputData) => {
-    console.log(inputData)
-    // doc.add(inputData)
-    //   .then((data) => {
-    //     this.setState({
-    //       isLoading:false,
-    //      });
-    //   })
-    //   .catch((error) =>{
-    //     throw new Error(error);
-    //   }
-    //   )
+    doc.add(inputData)
+      .then((data) => {
+        this.setState({
+          isLoading:false,
+         });
+      })
+      .catch((error) =>{
+        throw new Error(error);
+      }
+      )
   }
 
   update = (id, inputData) => {
@@ -144,7 +143,7 @@ class DocProvider extends Component {
 
   onSubmit = (values, update) => {
     if (update) {
-      this.update(values._id, values)
+      this.update(values.id, values)
     } else {
       this.add(values)      
     }
