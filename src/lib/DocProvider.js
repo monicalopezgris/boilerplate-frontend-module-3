@@ -54,16 +54,17 @@ class DocProvider extends Component {
   }
 
   add = (inputData) => {
-    doc.add(inputData)
-      .then((data) => {
-        this.setState({
-          isLoading:false,
-         });
-      })
-      .catch((error) =>{
-        throw new Error(error);
-      }
-      )
+    console.log(inputData)
+    // doc.add(inputData)
+    //   .then((data) => {
+    //     this.setState({
+    //       isLoading:false,
+    //      });
+    //   })
+    //   .catch((error) =>{
+    //     throw new Error(error);
+    //   }
+    //   )
   }
 
   update = (id, inputData) => {
@@ -90,27 +91,41 @@ class DocProvider extends Component {
       })
   }
 
-  getOne = (id) => {
-    doc.get(id)
+  // not used
+  getByRef = (ref) => {
+    doc.get(ref)
       .then((data)=>{
-        this.setState({
-          current:data,
-          isLoading:false,
-        })
       })
       .catch((error) =>{
         throw new Error(error);
       })
   }
 
-  storeCurrent = (data) => {
-    const {_id, ref, createdAt, updatedAt
-      , data:{client:{name, nif, address:{street, streetNum, postalCode, country}}}
-    } = data;
-    const items = data.data.items;
+  storeCurrent = (item) => {
+    const {
+      _id,
+      ref,
+      createdAt,
+      updatedAt,
+      data:{
+        client:{
+          name, 
+          nif, 
+          address:{
+            street, 
+            streetNum, 
+            postalCode,
+            country
+          }
+        }
+      }
+    } = item;
 
-    const current = Object.assign(this.state, {
+    const items = item.data.items;
+
+    this.setState(prevState => ({
       current: {
+        ...prevState.current,
         _id,
         ref,
         createdAt,
@@ -123,11 +138,7 @@ class DocProvider extends Component {
         country,
         items,
       }
-    })
-
-    this.setState({
-      current
-    });
+    }))
 
   }
 

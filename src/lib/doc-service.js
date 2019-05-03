@@ -21,9 +21,7 @@ class DocService {
 
   update(id, inputData) {
     return this.api.put(`/doc/${id}`, inputData)
-      .then(({ data }) => {
-        return data; 
-  });
+      .then(({ data }) => data);
   }
 
   del(id) {
