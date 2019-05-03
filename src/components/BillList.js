@@ -17,6 +17,7 @@ class BillList extends Component {
   render() {
     const { bills } = this.props;
     return (bills.map(bill => {
+      const {_id:id, createdAt, updatedAt} = bill;
      return <BillListItem key={bill._id} itemData={bill} />})
     );
   }
