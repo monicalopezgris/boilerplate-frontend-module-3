@@ -11,7 +11,7 @@ import Bill from './pages/Bill';
 import PrivateRoute from './components/PrivateRoute';
 import AnonRoute from './components/AnonRoute';
 import AuthProvider from './lib/AuthProvider';
-import DocProvider from './lib/DocProvider';
+import DocProvider from './lib/a_DocProvider';
 
 
 class App extends Component {
@@ -25,6 +25,7 @@ class App extends Component {
             <Switch>
               <AnonRoute path="/signup" component={Signup} />
               <AnonRoute path="/login" component={Login} />
+              <PrivateRoute exact path="/:id" component={Bill} />
               <PrivateRoute path="/bill" component={Bill} />
               <PrivateRoute path="/" component={Dash} />
             </Switch>
