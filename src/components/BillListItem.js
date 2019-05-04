@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { withDoc } from '../lib/DocProvider';
+import { Link, withRouter } from 'react-router-dom';
+import { withDoc } from '../lib/a_DocProvider';
 
 class BillListItem extends Component {
   constructor(props) {
@@ -9,37 +9,27 @@ class BillListItem extends Component {
     this.state = {};
   }
 
-  handleClick(id) {
+  handleDelete(id) {
     this.props.delete(id);
-  }
-
-  handleCurrent(data) {
-    const { storeCurrent } = this.props;
-    storeCurrent(data);
-
-    setTimeout(() => {
-      const { history } = this.props;
-      history.push('/bill');
-    }, 500);
   }
 
   render() {
     const {
-      itemData, itemData: {
+      itemData: {
         _id: id, createdAt, updatedAt,
       },
     } = this.props;
     return (
       <div>
-        <button type="button" onClick={() => { this.handleClick(id); }}> Delete </button>
-        <div onClick={() => { this.handleCurrent(itemData); }}>
+        <button type="button" onClick={() => { this.handleDelete(id); }}> Delete </button>
+        <Link to={`/${id}`}>
           <span>{id}</span>
           <span> | {createdAt}</span>
           <span> | {updatedAt}</span>
-        </div>
+        </Link>
       </div>
     );
   }
 }
 
-export default withRouter(withDoc(BillListItem));
+export default withRouter(BillListItem);

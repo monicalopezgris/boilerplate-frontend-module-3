@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import BillListItem from './BillListItem';
 import { withAuth } from '../lib/AuthProvider';
-import { withDoc } from '../lib/DocProvider'
-
+import doc from '../lib/doc-service';
 
 class BillList extends Component {
+
   state = {
-    bills:[]
+    bills: [],
   }
 
   async componentDidMount() {
-    const {get} = this.props;
-    await get()
-  };
+    const bills = await doc.get();
+    this.setState({ bills });
+  }
 
   render() {
-    const { bills } = this.props;
-    return (bills.map(bill => {
-      const {_id:id, createdAt, updatedAt} = bill;
-     return <BillListItem key={bill._id} itemData={bill} />})
+    const { bills } = this.state;
+    return (bills.map((bill) => {
+      const { _id: id } = bill;
+      return <BillListItem key={id} itemData={bill} />;
+    })
     );
   }
 }
 
-export default withAuth(withDoc(BillList));
+export default withAuth(BillList);
