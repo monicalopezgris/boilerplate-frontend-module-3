@@ -1,37 +1,49 @@
 import React, { Component } from 'react';
-import { Formik, Field, FieldArray, Form } from 'formik';
-import { withDoc } from '../lib/DocProvider';
-
+import {
+  Formik, Field, FieldArray, Form,
+} from 'formik';
+import { withRouter } from 'react-router-dom';
+import doc from '../lib/doc-service';
 
 class BillForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: []
-    };
-  }
-
-  componentWillUnmount() {
-    const { state } = this.props;
-    delete state.current;
-  }
-
-  // handleInputChange = (e) => {
-  //   const { onChange } = this.props;
-  //   onChange(e);
-  // }
-  // handleAdd = (values) => {
-  //   const newArr = this.state.items
-  //   newArr.push(values)
-  //   this.setState({
-  //     items: newArr,
-  //   })
+  // componentWillUnmount() {
+  //   const { bill } = this.props;
+  //   delete bill;
   // }
 
+  add = (inputData) => {
+    doc.add(inputData)
+      .then((data) => {
+        console.log('added', data)
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  }
 
-  handleSubmit = (values, update) => {
-    const { onSubmit } = this.props;
-    const { _id:id, name, nif, street, number, postalCode, country } = values
+  update = (id, inputData) => {
+    console.log(id)
+    doc.update(id, inputData)
+      .then((data) => {
+        console.log('update', data)
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  }
+
+  onSubmit = (values, update) => {
+    console.log(values)
+    if (update) {
+      this.update(values.id, values);
+    } else {
+      this.add(values);
+    }
+  }
+
+  handleSubmit = async (values, update) => {
+    const { history } = this.props;
+    const { id, name, nif, street, number, postalCode, country } = values
 
     let aux = []
     if (values.item) {
@@ -57,25 +69,39 @@ class BillForm extends Component {
       country,
       items: aux
     }
-    onSubmit(finalValues, update);
+    await this.onSubmit(finalValues, update);
+    await history.push('/');
   }
 
   render() {
-    const { current } = this.props.state
+    const {
+      bill: {
+        _id: id,
+        ref,
+        data: {
+          items, client: {
+            name, nif, address: {
+              street, streetNum, postalCode, country,
+            },
+          },
+        },
+      },
+    } = this.props;
+
     return (
       <>
         <Formik
           initialValues={
-            current ? current : ''
+            { id, ref, items, name, nif, street, streetNum, postalCode, country }
           }
           onSubmit={(values, actions) => {
             actions.setSubmitting(false);
-            const update = current ? true: false;
-            this.handleSubmit(values, update)
+            const update = !!id;
+            this.handleSubmit(values, update);
           }}
           render={({ values }) => (
             <Form>
-              <Field type='hidden' name ='ref'></Field>
+              <Field type="hidden" name="id" />
               <Field type="text" name="name" placeholder={`${values && values.name !== undefined ? values.name : 'name'}`} />
               <Field type="text" name="nif" placeholder={`${values && values.nif !== undefined ? values.nif : 'nif'}`} />
               <Field type="text" name="street" placeholder={`${values && values.street !== undefined ? values.street : 'street'}`} />
@@ -93,18 +119,23 @@ class BillForm extends Component {
                           <span>Item</span>
                           <Field name={`item.${index}`} placeholder={item.item} />
                           <span>Units</span>
-                          <Field type='number' name={`units.${index}`} placeholder={item.units} />
+                          <Field type="number" name={`units.${index}`} placeholder={item.units} />
                           <span>Price Unit</span>
-                          <Field type='number' name={`priceUnit.${index}`} placeholder={item.priceUnit} />
+                          <Field type="number" name={`priceUnit.${index}`} placeholder={item.priceUnit} />
                           <button
                             type="button"
                             onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                          > - </button>
+                          >
+                            {' '}
+                            -
+                            {' '}
+
+                          </button>
                         </div>
-                      )) 
-                    ):<div></div>}
-                    <button type="button" onClick={(index) => arrayHelpers.insert(index, '')}>
-                        Add an item
+                      ))
+                    ) : <div />}
+                    <button type="button" onClick={index => arrayHelpers.insert(index, '')}>
+                      Add an item
                     </button>
                     <div>
                       <button type="submit">Submit</button>
@@ -120,4 +151,4 @@ class BillForm extends Component {
   }
 }
 
-export default withDoc(BillForm);
+export default withRouter(BillForm);
