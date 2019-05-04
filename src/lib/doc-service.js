@@ -14,6 +14,11 @@ class DocService {
       .then(({ data }) => data);
   }
 
+  getById(id) {
+    return this.api.get(`/doc/${id}`)
+      .then(({ data }) => data);
+  }
+
   add(inputData) {
     return this.api.post('/doc', inputData)
       .then(({ data }) => data);
