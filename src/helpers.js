@@ -6,6 +6,6 @@ export function getNewRef(ref) {
   return newRef;
 }
 
-export function aa() {
-  return aa;
+export function calcPrice(units, unitPrice) {
+  return units * unitPrice;
 }

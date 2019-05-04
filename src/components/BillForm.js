@@ -35,7 +35,7 @@ class BillForm extends Component {
 
     let aux = []
     if (values.item) {
-      //generate item object of separated array values
+      //generate item object
       for (let i = 0; i < values.item.length; i++) {
         aux.push(
           {

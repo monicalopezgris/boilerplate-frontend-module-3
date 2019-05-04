@@ -1,24 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withDoc } from '../../lib/DocProvider';
 
-class BillSlideClient extends Component {
-  state = {  }
 
+const BillSlideClient = ({ state }) => {
+  const data = state.current ? state.current : null;
+  const {
+    name, nif, street, streetNum, postalCode, country,
+  } = data;
+  return (
+    <div>
 
-  render() { 
-    const data = this.props.state.current? this.props.state.current.current : null;
-    return ( 
-      <div>
+      <p>{data ? name : ''}</p>
+      <p>{data ? nif : ''}</p>
+      <p>
+        {data ? street : ''}
+        ,
+        {data ? streetNum : ''}
+      </p>
+      <p>{data ? postalCode : ''}</p>
+      <p>{data ? country : ''}</p>
 
-        <p>{data? data.name:''}</p>
-        <p>{data? data.nif:''}</p>
-        <p>{data? data.street:''},{data? data.streetNum:''}</p>
-        <p>{data? data.postalCode:''}</p>
-        <p>{data? data.country:''}</p>
+    </div>
+  );
+};
 
-      </div>
-     );
-  }
-}
- 
 export default withDoc(BillSlideClient);

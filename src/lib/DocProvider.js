@@ -20,8 +20,8 @@ export const withDoc = Comp => {
                 update={docStore.update}
                 delete={docStore.delete}
                 storeCurrent={docStore.storeCurrent}
-                onChange={docStore.onChange}
                 onSubmit={docStore.onSubmit}
+                // onChange={docStore.onChange}
                 {...this.props}
               />
             );
@@ -90,15 +90,17 @@ class DocProvider extends Component {
       })
   }
 
-  // not used
-  getByRef = (ref) => {
-    doc.get(ref)
-      .then((data)=>{
-      })
-      .catch((error) =>{
-        throw new Error(error);
-      })
-  }
+  // getByRef = (ref) => {
+  //   doc.get(ref)
+  //     .then((data) => {
+  //       this.setState({
+  //         isLoading: false,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       throw new Error(error);
+  //     })
+  // }
 
   storeCurrent = (item) => {
     const {
@@ -160,8 +162,8 @@ class DocProvider extends Component {
           update:this.update,
           delete: this.delete,
           storeCurrent:this.storeCurrent,
-          onChange: this.onChange,
           onSubmit: this.onSubmit,
+          // onChange: this.onChange,
         }}
       >
         {this.props.children}

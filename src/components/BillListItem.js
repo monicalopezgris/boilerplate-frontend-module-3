@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withDoc } from '../lib/DocProvider';
