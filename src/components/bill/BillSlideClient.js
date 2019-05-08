@@ -2,12 +2,13 @@ import React from 'react';
 
 
 const BillSlideClient = ({ data }) => {
-  const { name, nif } = data;
+  const name = data ? data.name : '';
+  const nif = data ? data.nif : '';
   return (
-    <div>
-
-      <p>{data ? name : ''}</p>
-      <p>{data ? nif : ''}</p>
+    <div className="client">
+      <h2>Client</h2>
+      <p>{name}</p>
+      <p>{nif}</p>
       {/* <p>
         {data ? street : ''}
         ,

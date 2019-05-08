@@ -14,83 +14,80 @@ class BillForm extends Component {
   add = (inputData) => {
     doc.add(inputData)
       .then((data) => {
-        console.log('added', data)
       })
       .catch((error) => {
         throw new Error(error);
       });
   }
 
-  update = (id, inputData) => {
-    console.log(id)
-    doc.update(id, inputData)
-      .then((data) => {
-        console.log('update', data)
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  }
-
-  onSubmit = (values, update) => {
-    console.log(values)
-    if (update) {
-      this.update(values.id, values);
-    } else {
-      this.add(values);
-    }
-  }
-
-  handleSubmit = async (values, update) => {
-    const { history } = this.props;
+  handleSubmit = (values, update) => {
     const { id, name, nif, street, number, postalCode, country } = values
+    const { history } = this.props;
+    if (update) {
+      doc.update(id, values)
+        .then((data) => {
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+    } else {
+      // add
 
-    let aux = []
-    if (values.item) {
-      //generate item object
+      // generate item object using returned data of formik
+      let aux = [];
       for (let i = 0; i < values.item.length; i++) {
         aux.push(
           {
-            "item": values.item[i],
-            "units": values.units[i],
-            "priceUnits": values.priceUnit[i],
-          }
-        )
+            item: values.item[i],
+            units: values.units[i],
+            priceUnit: values.priceUnit[i],
+          },
+        );
       }
-    }
 
-    const finalValues = {
-      id,
-      name,
-      nif,
-      street,
-      number,
-      postalCode,
-      country,
-      items: aux
+      const finalValues = {
+        id,
+        name,
+        nif,
+        street,
+        number,
+        postalCode,
+        country,
+        items: aux,
+      };
+      this.add(finalValues);
     }
-    await this.onSubmit(finalValues, update);
-    await history.push('/');
+    history.push('/');
   }
 
   render() {
-    const {
-      bill: {
-        _id: id,
-        ref,
-        data: {
-          items, client: {
-            name, nif, address: {
-              street, streetNum, postalCode, country,
-            },
-          },
-        },
-      },
-    } = this.props;
-
+    // const {
+    //   bill: {
+    //     _id: id,
+    //     ref,
+    //     data: {
+    //       items, client: {
+    //         name, nif, address: {
+    //           street, streetNum, postalCode, country,
+    //         },
+    //       },
+    //     },
+    //   },
+    // } = this.props;
+    const bill = this.props.bill ? this.props.bill : null;
+    const id = bill ? bill._id : '';
+    const ref = bill ? bill.ref : '';
+    const name = bill.data ? bill.data.client.name : '';
+    const nif = bill.data ? bill.data.client.nif : '';
+    const street = bill.data ? bill.data.client.address.street : '';
+    const streetNum = bill.data ? bill.data.client.address.streetNum : '';
+    const postalCode = bill.data ? bill.data.client.address.postalCode : '';
+    const country = bill.data ? bill.data.client.address.country : '';
+    const items = bill && bill.data ? bill.data.items : [];
     return (
       <>
         <Formik
+          className="form"
           initialValues={
             { id, ref, items, name, nif, street, streetNum, postalCode, country }
           }
@@ -117,24 +114,23 @@ class BillForm extends Component {
                       values.items.map((item, index) => (
                         <div key={index}>
                           <span>Item</span>
-                          <Field name={`item.${index}`} placeholder={item.item} />
+                          <Field name={`item.${index}`} placeholder={item.item} value={item.item} />
                           <span>Units</span>
-                          <Field type="number" name={`units.${index}`} placeholder={item.units} />
+                          <Field type="number" name={`units.${index}`} placeholder={item.units} value={item.units} />
                           <span>Price Unit</span>
-                          <Field type="number" name={`priceUnit.${index}`} placeholder={item.priceUnit} />
+                          <Field type="number" name={`priceUnit.${index}`} placeholder={item.priceUnit} value={item.units} />
                           <button
                             type="button"
-                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                            onClick={() => arrayHelpers.remove(index)}
                           >
                             {' '}
                             -
                             {' '}
-
                           </button>
                         </div>
                       ))
                     ) : <div />}
-                    <button type="button" onClick={index => arrayHelpers.insert(index, '')}>
+                    <button type="button" onClick={index => arrayHelpers.push('')}>
                       Add an item
                     </button>
                     <div>

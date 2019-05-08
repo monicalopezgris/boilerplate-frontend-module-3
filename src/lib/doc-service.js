@@ -29,7 +29,7 @@ class DocService {
       .then(({ data }) => data);
   }
 
-  del(id) {
+  delete(id) {
     return this.api.delete(`/doc/${id}`)
       .then(({ data }) => data);
   }

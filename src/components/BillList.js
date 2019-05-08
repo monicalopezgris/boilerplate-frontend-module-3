@@ -14,11 +14,15 @@ class BillList extends Component {
     this.setState({ bills });
   }
 
+  onDelete = (id) => {
+    doc.delete(id);
+  }
+
   render() {
     const { bills } = this.state;
     return (bills.map((bill) => {
       const { _id: id } = bill;
-      return <BillListItem key={id} itemData={bill} />;
+      return <BillListItem key={id} itemData={bill} onDelete={this.onDelete} />;
     })
     );
   }

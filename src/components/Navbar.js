@@ -10,12 +10,12 @@ const NavBar = ({ logout, isLoggedin }) => {
           <button onClick={logout}>Logout</button>
         </>
       ) : (
-        <>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
-          <Link to="/dash">Signup</Link>
-        </>
-      )}
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+            <Link to="/">Dash</Link>
+          </>
+        )}
     </div>
   );
 };

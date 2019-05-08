@@ -1,17 +1,40 @@
 import React from 'react';
 
-const BillSlideItems = ({ data: items }) => {
-  return (items.map((item, index) => {
-    const { item: itemName, units, priceUnits } = item;
+const BillSlideItems = ({ data }) => {
+  const items = data || null;
+
+  if (items) {
     return (
-      <div key={index}>
-        <span>{itemName} | </span>
-        <span>{units} | </span>
-        <span>{priceUnits}</span>
-      </div>
-    )
-  })
-  );
+      <>
+        <div>
+          <h2>Items</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Units</th>
+                <th>Price Units</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item, index) => {
+                const { item: itemName, units, priceUnit } = item;
+                return (
+                  <tr key={index}>
+                    <td>{itemName}</td>
+                    <td>{units}</td>
+                    <td>{priceUnit}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </>
+    );
+
+
+  }
   return <div />;
 };
 

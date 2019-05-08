@@ -5,7 +5,7 @@ import BillList from '../components/BillList';
 const Dash = () => (
   <>
     <BillList />
-    <Link to="/bill"><button type="button">Add</button></Link>
+    <Link to="/new"><button type="button">Add</button></Link>
   </>
 );
 export default Dash;

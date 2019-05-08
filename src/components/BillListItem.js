@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { withDoc } from '../lib/a_DocProvider';
 
 class BillListItem extends Component {
   constructor(props) {
@@ -10,7 +9,8 @@ class BillListItem extends Component {
   }
 
   handleDelete(id) {
-    this.props.delete(id);
+    const { onDelete } = this.props;
+    onDelete(id);
   }
 
   render() {
