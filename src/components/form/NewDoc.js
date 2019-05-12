@@ -1,9 +1,47 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import {
   Formik, Field, FieldArray, Form, ErrorMessage,
 } from 'formik';
 import { withRouter } from 'react-router-dom';
 import doc from '../../lib/doc-service';
+
+const Formu = styled(Form)`
+  margin: 0;
+  width: 100%;
+  background-color:${props => props.theme.color.secondaryColor};
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15% 0 15%;
+  color: black;
+`;
+const Item = styled.div`
+  border-bottom: 1px solid grey;
+`;
+const Label = styled.span`
+  text-align: center;
+  margin: 5% 0;
+`;
+const Heading = styled.span`
+  font-size:1.5;
+  font-weight:bold;
+  text-align: center;
+  margin: 5% 0;
+`;
+const Fieldu = styled(Field)`
+  border-radius: 10px;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  text-align: center;
+  &: hover{
+    border-color: ${props => props.theme.color.primaryColor};
+  }
+  &: focus{
+    border-color: ${props => props.theme.color.primaryColor};
+  }
+  padding: 3% 5%;
+`;
 
 class NewDocForm extends Component {
   state = {}
@@ -19,7 +57,6 @@ class NewDocForm extends Component {
     return (
       <>
         <Formik
-          className="form"
           initialValues={{ items: [] }}
           validationSchema={billSchema}
           onSubmit={(values, actions) => {
@@ -27,39 +64,46 @@ class NewDocForm extends Component {
             this.handleSubmit(values);
           }}
           render={({ values, touched, errors }) => (
-            <Form>
+            <Formu>
               <Field type="hidden" name="id" />
-              <Field
+              <Heading> Client </Heading>
+              <Label> Name</Label>
+              <Fieldu
                 type="text"
                 name="name"
                 placeholder="name"
               />
+              <Label>Cif</Label>
               <ErrorMessage name="name" />
-              <Field
+              <Fieldu
                 type="text"
-                name="nif"
-                placeholder="nif"
+                name="cif"
+                placeholder="cif"
               />
-              <ErrorMessage name="nif" />
-              <Field
+              <ErrorMessage name="cif" />
+              <Label>Street</Label>
+              <Fieldu
                 type="text"
                 name="street"
                 placeholder="street"
               />
               <ErrorMessage name="street" />
-              <Field
+              <Label>Number</Label>
+              <Fieldu
                 type="number"
                 name="streetNum"
                 placeholder="Number"
               />
               <ErrorMessage name="streetNum" />
-              <Field
+              <Label>PostalCode</Label>
+              <Fieldu
                 type="number"
                 name="postalCode"
                 placeholder="Postal Code"
               />
               <ErrorMessage name="postalCode" />
-              <Field
+              <Label>Country</Label>
+              <Fieldu
                 type="text"
                 name="country"
                 placeholder="Country"
@@ -72,12 +116,12 @@ class NewDocForm extends Component {
                   <div>
                     {values.items.map((item, index) => (
                       <div key={index}>
-                        <span>Item</span>
-                        <Field name={`items[${index}].item`} placeholder='item' />
-                        <span>Units</span>
-                        <Field type="number" name={`items[${index}].units`} placeholder='units' />
-                        <span>Price Unit</span>
-                        <Field type="number" name={`items[${index}].priceUnit`} placeholder='priceUnit' />
+                        <Label>Item</Label>
+                        <Fieldu name={`items[${index}].item`} placeholder='item' />
+                        <Label>Units</Label>
+                        <Fieldu type="number" name={`items[${index}].units`} placeholder='units' />
+                        <Label>Price Unit</Label>
+                        <Fieldu type="number" name={`items[${index}].priceUnit`} placeholder='priceUnit' />
                         <button
                           type="button"
                           onClick={() => arrayHelpers.remove(index)}
@@ -98,7 +142,7 @@ class NewDocForm extends Component {
                   </div>
                 )}
               />
-            </Form>
+            </Formu>
           )}
         />
       </>

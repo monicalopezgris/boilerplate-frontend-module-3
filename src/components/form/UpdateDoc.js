@@ -1,12 +1,49 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import {
   Formik, Field, FieldArray, Form, ErrorMessage,
 } from 'formik';
 import { withRouter } from 'react-router-dom';
 import doc from '../../lib/doc-service';
 
-class UpdateDoc extends Component {
+const Formu = styled(Form)`
+  margin: 0;
+  width: 100%;
+  background-color:${props => props.theme.color.secondaryColor};
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15% 0 15%;
+  color: black;
+`;
+const Item = styled.div`
+  border-bottom: 1px solid grey;
+`;
+const Label = styled.span`
+  text-align: center;
+  margin: 5% 0;
+`;
+const Heading = styled.span`
+  font-size:1.5;
+  font-weight:bold;
+  text-align: center;
+  margin: 5% 0;
+`;
+const Fieldu = styled(Field)`
+  border-radius: 10px;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  text-align: center;
+  &: hover{
+    border-color: ${props => props.theme.color.primaryColor};
+  }
+  &: focus{
+    border-color: ${props => props.theme.color.primaryColor};
+  }
+  padding: 3% 5%;
+`;
 
+class UpdateDoc extends Component {
   handleSubmit = (values) => {
     const { id } = values;
     const { history } = this.props;
@@ -48,40 +85,47 @@ class UpdateDoc extends Component {
             const update = !!id;
             this.handleSubmit(values, update);
           }}
-          render={({ values, touched, errors }) => (
-            <Form>
+          render={({ values }) => (
+            <Formu>
               <Field type="hidden" name="id" />
-              <Field
+              <Heading> Client </Heading>
+              <Label> Name</Label>
+              <Fieldu
                 type="text"
                 name="name"
                 placeholder={`${values && values.name !== undefined ? values.name : 'name'}`}
               />
               <ErrorMessage name="name" />
-              <Field
+              <Label>Cif</Label>
+              <Fieldu
                 type="text"
-                name="nif"
-                placeholder={`${values && values.nif !== undefined ? values.nif : 'nif'}`}
+                name="cif"
+                placeholder={`${values && values.cif !== undefined ? values.cif : 'cif'}`}
               />
-              <ErrorMessage name="nif" />
-              <Field
+              <ErrorMessage name="cif" />
+              <Label>Street</Label>
+              <Fieldu
                 type="text"
                 name="street"
                 placeholder={`${values && values.street !== undefined ? values.street : 'street'}`}
               />
               <ErrorMessage name="street" />
-              <Field
+              <Label>Number</Label>
+              <Fieldu
                 type="number"
                 name="streetNum"
                 placeholder={`${values && values.streetNum !== undefined ? values.streetNum : 'Number'}`}
               />
               <ErrorMessage name="streetNum" />
-              <Field
+              <Label>PostalCode</Label>
+              <Fieldu
                 type="number"
                 name="postalCode"
                 placeholder={`${values && values.postalCode !== undefined ? values.postalCode : 'Postal Code'}`}
               />
               <ErrorMessage name="postalCode" />
-              <Field
+              <Label>Country</Label>
+              <Fieldu
                 type="text"
                 name="country"
                 placeholder={`${values && values.country !== undefined ? values.country : 'Country'}`}
@@ -92,15 +136,19 @@ class UpdateDoc extends Component {
                 name="items"
                 render={arrayHelpers => (
                   <div>
+                    <Heading> Items </Heading>
                     {values.items && values.items.length > 0 ? (
                       values.items.map((item, index) => (
-                        <div key={index}>
-                          <span>Item</span>
-                          <Field name={`items[${index}].item`} placeholder={item.item} value={item.item} />
-                          <span>Units</span>
-                          <Field type="number" name={`items[${index}].units`} placeholder={item.units} value={item.units} />
-                          <span>Price Unit</span>
-                          <Field type="number" name={`items[${index}].priceUnit`} placeholder={item.priceUnit} value={item.priceUnit} />
+                        <Item key={index}>
+                          <Label>Item</Label>
+                          <Fieldu name={`items[${index}].item`} placeholder={item.item} value={item.item} />
+                          <ErrorMessage name={`items[${index}].item`} />
+                          <Label>Units</Label>
+                          <Fieldu type="number" name={`items[${index}].units`} placeholder={item.units} value={item.units} />
+                          <ErrorMessage name={`items[${index}].units`} />
+                          <Label>Price Unit</Label>
+                          <Fieldu type="number" name={`items[${index}].priceUnit`} placeholder={item.priceUnit} value={item.priceUnit} />
+                          <ErrorMessage name={`items[${index}].priceUnit`} />
                           <button
                             type="button"
                             onClick={() => arrayHelpers.remove(index)}
@@ -109,7 +157,8 @@ class UpdateDoc extends Component {
                             -
                             {' '}
                           </button>
-                        </div>
+
+                        </Item>
                       ))
                     ) : <div />}
                     <button type="button" onClick={index => arrayHelpers.push('')}>
@@ -121,7 +170,7 @@ class UpdateDoc extends Component {
                   </div>
                 )}
               />
-            </Form>
+            </Formu>
           )}
         />
       </>

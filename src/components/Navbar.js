@@ -1,22 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { withAuth } from '../lib/AuthProvider';
+import styled from 'styled-components';
+import { withAuth } from '../lib/AuthProvider';
 
-const NavBar = ({ logout, isLoggedin }) => {
+const Navbar = styled.div`
+    background-color: ${props => props.theme.color.primaryColor};
+    display:flex;
+    justify-content: space-between;
+    height: 5vh;
+  `;
+const Button = styled.button`
+  background-color: transparent;
+  color:white;
+  font-weight: bold;
+  border:none;
+`;
+
+
+const NavBar = ({ logout, isLoggedin, history }) => {
+  const handleBack = () => {
+    history.go(-1);
+  };
+
   return (
-    <div>
+    <Navbar>
       {isLoggedin ? (
         <>
-          <button onClick={logout}>Logout</button>
+          <Button type="button" onClick={handleBack}> back </Button>
+          <img alt="logo" src="/logo_sm.png" />
+          <Button onClick={logout}>logout</Button>
         </>
       ) : (
           <>
             <Link to="/login">Login</Link>
             <Link to="/signup">Signup</Link>
-            <Link to="/">Dash</Link>
+            <button type="button"> Logout</button>
           </>
         )}
-    </div>
+    </Navbar>
   );
 };
-export default NavBar;
+export default withAuth(NavBar);
