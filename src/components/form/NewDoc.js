@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {
-  Formik, Field, FieldArray, Form, ErrorMessage,
+  Formik, Field, FieldArray, Form, ErrorMessage, option,
 } from 'formik';
 import { withRouter } from 'react-router-dom';
 import doc from '../../lib/doc-service';
@@ -44,7 +44,9 @@ const Fieldu = styled(Field)`
 `;
 
 class NewDocForm extends Component {
-  state = {}
+  state = {
+    savedClient: true,
+  }
 
   handleSubmit = (values) => {
     const { history } = this.props;
@@ -52,64 +54,90 @@ class NewDocForm extends Component {
     history.push('/');
   }
 
+  handleChange = () => {
+    const { savedClient } = this.state;
+    if (savedClient) {
+      this.setState({
+        savedClient: false,
+      });
+    } else {
+      this.setState({
+        savedClient: true,
+      });
+    }
+  }
+
   render() {
     const { billSchema } = this.props;
     return (
       <>
         <Formik
-          initialValues={{ items: [] }}
+          initialValues={{ savedClient: true, status: String, items: [] }}
           validationSchema={billSchema}
           onSubmit={(values, actions) => {
             actions.setSubmitting(false);
             this.handleSubmit(values);
           }}
-          render={({ values, touched, errors }) => (
+          render={({ values }) => (
             <Formu>
               <Field type="hidden" name="id" />
               <Heading> Client </Heading>
-              <Label> Name</Label>
-              <Fieldu
-                type="text"
-                name="name"
-                placeholder="name"
-              />
-              <Label>Cif</Label>
-              <ErrorMessage name="name" />
-              <Fieldu
-                type="text"
-                name="cif"
-                placeholder="cif"
-              />
-              <ErrorMessage name="cif" />
-              <Label>Street</Label>
-              <Fieldu
-                type="text"
-                name="street"
-                placeholder="street"
-              />
-              <ErrorMessage name="street" />
-              <Label>Number</Label>
-              <Fieldu
-                type="number"
-                name="streetNum"
-                placeholder="Number"
-              />
-              <ErrorMessage name="streetNum" />
-              <Label>PostalCode</Label>
-              <Fieldu
-                type="number"
-                name="postalCode"
-                placeholder="Postal Code"
-              />
-              <ErrorMessage name="postalCode" />
-              <Label>Country</Label>
-              <Fieldu
-                type="text"
-                name="country"
-                placeholder="Country"
-              />
-              <ErrorMessage name="country" />
-
+              <Field type="checkbox" name="savedClient" checked={values.savedClient} onChange={this.handleChange} />
+              {this.state.savedClient
+                ? (
+                  <Field component="select" name="status">
+                    <option value="draft">Draft</option>
+                    <option value="Closed">Closed</option>
+                    <option value="sended">Sended</option>
+                  </Field>
+                )
+                : (
+                  <>
+                    <Label> Name</Label>
+                    <Fieldu
+                      type="text"
+                      name="name"
+                      placeholder="name"
+                    />
+                    <Label>Cif</Label>
+                    <ErrorMessage name="name" />
+                    <Fieldu
+                      type="text"
+                      name="cif"
+                      placeholder="cif"
+                    />
+                    <ErrorMessage name="cif" />
+                    <Label>Street</Label>
+                    <Fieldu
+                      type="text"
+                      name="street"
+                      placeholder="street"
+                    />
+                    <ErrorMessage name="street" />
+                    <Label>Number</Label>
+                    <Fieldu
+                      type="number"
+                      name="streetNum"
+                      placeholder="Number"
+                    />
+                    <ErrorMessage name="streetNum" />
+                    <Label>PostalCode</Label>
+                    <Fieldu
+                      type="number"
+                      name="postalCode"
+                      placeholder="Postal Code"
+                    />
+                    <ErrorMessage name="postalCode" />
+                    <Label>Country</Label>
+                    <Fieldu
+                      type="text"
+                      name="country"
+                      placeholder="Country"
+                    />
+                    <ErrorMessage name="country" />
+                  </>
+                )
+              }
               <FieldArray
                 name="items"
                 render={arrayHelpers => (
@@ -117,11 +145,11 @@ class NewDocForm extends Component {
                     {values.items.map((item, index) => (
                       <div key={index}>
                         <Label>Item</Label>
-                        <Fieldu name={`items[${index}].item`} placeholder='item' />
+                        <Fieldu name={`items[${index}].item`} placeholder="item" />
                         <Label>Units</Label>
-                        <Fieldu type="number" name={`items[${index}].units`} placeholder='units' />
+                        <Fieldu type="number" name={`items[${index}].units`} placeholder="units" />
                         <Label>Price Unit</Label>
-                        <Fieldu type="number" name={`items[${index}].priceUnit`} placeholder='priceUnit' />
+                        <Fieldu type="number" name={`items[${index}].priceUnit`} placeholder="priceUnit" />
                         <button
                           type="button"
                           onClick={() => arrayHelpers.remove(index)}
@@ -136,12 +164,17 @@ class NewDocForm extends Component {
                     <button type="button" onClick={index => arrayHelpers.push('')}>
                       Add an item
                     </button>
-                    <div>
-                      <button type="submit">Submit</button>
-                    </div>
                   </div>
                 )}
               />
+              <Field component="select" name="status">
+                <option value="draft">Draft</option>
+                <option value="Closed">Closed</option>
+                <option value="sended">Sended</option>
+              </Field>
+              <div>
+                <button type="submit">Submit</button>
+              </div>
             </Formu>
           )}
         />
