@@ -66,11 +66,9 @@ class NavBar extends Component {
           aux
             ? (
               <NavBody onClick={this.handleClick}>
-                <Switch>
-                  <Link to="/bill">Bills</Link>
-                  <Link to="/clients">Clients</Link>
-                  <Link to="/company">Company</Link>
-                </Switch>
+                <Link to="/bill">Bills</Link>
+                <Link to="/client">Clients</Link>
+                <Link to="/company">Company</Link>
               </NavBody>
             )
             : <span />
