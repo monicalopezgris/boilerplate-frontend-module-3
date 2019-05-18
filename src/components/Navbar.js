@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { withAuth } from '../lib/AuthProvider';
-import PrivateRoute from './PrivateRoute';
-import BillList from './bill/BillList';
-import ClientList from './clients/ClientList';
-import CompanyList from './company/CompanyList';
 
 const Navbar = styled.div`
   background-color: ${props => props.theme.color.primaryColor};

@@ -64,7 +64,7 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password } = this.state;
+    // const { username, password } = this.state;
     return (
       <Wrapper>
         <Logo alt="logo" src="/logo.png" />

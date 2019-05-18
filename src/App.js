@@ -22,16 +22,20 @@ import PrivateRoute from './components/PrivateRoute';
 import AnonRoute from './components/AnonRoute';
 import AuthProvider from './lib/AuthProvider';
 
-class App extends Component {
+const Wrapper = styled.div`
+  height: 95vh;
+  background-color: ${props => props.theme.color.secondaryColor};
+`;
 
+class App extends Component {
   render() {
     return (
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <div>
-            <div>
-              <Reset />
-              <PrivateRoute path="/" component={Navbar} />
+            <Reset />
+            <PrivateRoute path="/" component={Navbar} />
+            <Wrapper>
               <Switch>
                 <AnonRoute exact path="/signup" component={Signup} />
                 <AnonRoute exact path="/login" component={Login} />
@@ -44,8 +48,9 @@ class App extends Component {
                 <PrivateRoute exact path="/client" component={ClientList} />
                 {/* <PrivateRoute exact path="/client/:id" component={UpdateClient} /> */}
                 <PrivateRoute exact path="/client/new" component={NewClient} />
+                <PrivateRoute path="/" component={BillList} />
               </Switch>
-            </div>
+            </Wrapper>
             <GlobalStyle />
           </div>
         </ThemeProvider>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {
-  Formik, Field, Form, ErrorMessage
+  Formik, Field, Form, ErrorMessage,
 } from 'formik';
 import { withRouter } from 'react-router-dom';
 import companyService from '../../lib/company-service';
@@ -15,9 +15,6 @@ const Formu = styled(Form)`
   flex-direction: column;
   padding: 0 15% 0 15%;
   color: black;
-`;
-const Item = styled.div`
-  border-bottom: 1px solid grey;
 `;
 const Label = styled.span`
   text-align: center;
@@ -52,7 +49,7 @@ class NewClientForm extends Component {
   }
 
   render() {
-    const { billSchema } = this.props;
+    // const { billSchema } = this.props;
     return (
       <>
         <Formik
@@ -62,7 +59,7 @@ class NewClientForm extends Component {
             actions.setSubmitting(false);
             this.handleSubmit(values);
           }}
-          render={({ values }) => (
+          render={() => (
             <Formu>
               <Field type="hidden" name="id" />
               <Field type="hidden" name="admin" />

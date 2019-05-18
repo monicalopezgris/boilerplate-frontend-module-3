@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 class DocService {
   constructor() {
     this.api = axios.create({
@@ -11,12 +10,18 @@ class DocService {
 
   get() {
     return this.api.get('/doc')
-      .then(({ data }) => ({ data }));
+      .then(({ data }) => ({ data }))
+      .catch((error) => {
+        return error;
+      });
   }
 
   getById(id) {
     return this.api.get(`/doc/${id}`)
-      .then(({ data }) => ({ data }));
+      .then(({ data }) => ({ data }))
+    // .catch((error) => {
+    //   throw new Error('I crashed!');
+    // });
   }
 
   add(inputData) {

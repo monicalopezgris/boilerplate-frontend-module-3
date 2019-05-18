@@ -17,9 +17,6 @@ const Formu = styled(Form)`
   padding: 0 15% 0 15%;
   color: black;
 `;
-const Item = styled.div`
-  border-bottom: 1px solid grey;
-`;
 const Label = styled.span`
   text-align: center;
   margin: 5% 0;
@@ -46,7 +43,7 @@ const Fieldu = styled(Field)`
 
 class NewDocForm extends Component {
   state = {
-    savedClient: true,
+    savedClient: false,
   }
 
   handleSubmit = (values) => {
@@ -82,13 +79,14 @@ class NewDocForm extends Component {
             <Formu>
               <Field type="hidden" name="id" />
               <Heading> Client </Heading>
+              <Label> Saved client?</Label>
               <Field type="checkbox" name="savedClient" checked={values.savedClient} onChange={this.handleChange} />
               {this.state.savedClient
                 ? (
                   <Field component="select" name="status">
-                    <option value="draft">Draft</option>
-                    <option value="closed">Closed</option>
-                    <option value="sended">Sended</option>
+                    <option value="client1">client1</option>
+                    <option value="closed">client2</option>
+                    <option value="sended">client3</option>
                   </Field>
                 )
                 : (

@@ -7,6 +7,7 @@ class BillUpdate extends Component {
   state = {
     isLoading: true,
     item: {},
+    error: false,
   }
 
   async componentDidMount() {
@@ -18,7 +19,9 @@ class BillUpdate extends Component {
         isLoading: false,
       });
     } catch (error) {
-      console.log(error);
+      this.setState({
+        error,
+      });
     }
   }
 

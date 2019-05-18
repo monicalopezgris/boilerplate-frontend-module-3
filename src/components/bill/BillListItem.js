@@ -35,14 +35,14 @@ class BillListItem extends Component {
   render() {
     const {
       itemData: {
-        _id: id, createdAt, updatedAt,
+        _id: id,
       },
     } = this.props;
     return (
       <>
         <WrapperAsLink to={`/bill/${id}`} className="link">
           <CardSm>
-            <span>{id}</span>
+            <p>{id}</p>
           </CardSm>
         </WrapperAsLink>
         <Button type="button" onClick={() => { this.handleDelete(id); }}> X </Button>
