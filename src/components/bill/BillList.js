@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import BillListItem from './BillListItem';
-import styled from 'styled-components';
-import { withAuth } from '../lib/AuthProvider';
-import doc from '../lib/doc-service';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { withAuth } from '../../lib/AuthProvider';
+import doc from '../../lib/doc-service';
+import BillListItem from './BillListItem';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -28,7 +28,7 @@ class BillList extends Component {
     const { bills } = this.state;
     return (
       <Wrapper>
-        <Link to="/new"><button type="button">Add</button></Link>
+        <Link to="/bill/new"><button type="button">Add</button></Link>
         {
           bills.map((bill) => {
             const { _id: id } = bill;

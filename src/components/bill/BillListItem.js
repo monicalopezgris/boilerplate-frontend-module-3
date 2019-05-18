@@ -39,14 +39,15 @@ class BillListItem extends Component {
       },
     } = this.props;
     return (
-      <WrapperAsLink to={`/${id}`} className="link">
-        <CardSm>
-          <span>{id}</span>
-          {/* <span>{createdAt}</span>
-          <span>{updatedAt}</span> */}
-        </CardSm>
+      <>
+        <WrapperAsLink to={`/bill/${id}`} className="link">
+          <CardSm>
+            <span>{id}</span>
+          </CardSm>
+        </WrapperAsLink>
         <Button type="button" onClick={() => { this.handleDelete(id); }}> X </Button>
-      </WrapperAsLink>
+      </>
+
     );
   }
 }

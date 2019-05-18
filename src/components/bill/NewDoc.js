@@ -4,6 +4,7 @@ import {
   Formik, Field, FieldArray, Form, ErrorMessage, option,
 } from 'formik';
 import { withRouter } from 'react-router-dom';
+import { billSchema } from '../../lib/validationSchemas';
 import doc from '../../lib/doc-service';
 
 const Formu = styled(Form)`
@@ -68,7 +69,6 @@ class NewDocForm extends Component {
   }
 
   render() {
-    const { billSchema } = this.props;
     return (
       <>
         <Formik
@@ -87,7 +87,7 @@ class NewDocForm extends Component {
                 ? (
                   <Field component="select" name="status">
                     <option value="draft">Draft</option>
-                    <option value="Closed">Closed</option>
+                    <option value="closed">Closed</option>
                     <option value="sended">Sended</option>
                   </Field>
                 )

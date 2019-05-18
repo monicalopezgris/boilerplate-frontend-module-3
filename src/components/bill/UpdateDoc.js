@@ -4,7 +4,9 @@ import {
   Formik, Field, FieldArray, Form, ErrorMessage,
 } from 'formik';
 import { withRouter } from 'react-router-dom';
+import { billSchema } from '../../lib/validationSchemas';
 import doc from '../../lib/doc-service';
+
 
 const Formu = styled(Form)`
   margin: 0;
@@ -44,9 +46,11 @@ const Fieldu = styled(Field)`
 `;
 
 class UpdateDoc extends Component {
+
   handleSubmit = (values) => {
     const { id } = values;
     const { history } = this.props;
+    console.log(values);
     doc.update(id, values)
       .then((data) => {
       })
@@ -57,19 +61,20 @@ class UpdateDoc extends Component {
   }
 
   render() {
+    // console.log(this.props);
     const {
       bill: {
         _id: id,
-        ref,
+        status,
         data: {
-          items, client: {
-            name, nif, address: {
+          items,
+          client: {
+            name, cif, address: {
               street, streetNum, postalCode, country,
             },
           },
         },
       },
-      billSchema,
     } = this.props;
 
     return (
@@ -77,7 +82,7 @@ class UpdateDoc extends Component {
         <Formik
           className="form"
           initialValues={
-            { id, ref, items, name, nif, street, streetNum, postalCode, country }
+            { id, status, items, name, cif, street, streetNum, postalCode, country }
           }
           validationSchema={billSchema}
           onSubmit={(values, actions) => {
@@ -164,12 +169,16 @@ class UpdateDoc extends Component {
                     <button type="button" onClick={index => arrayHelpers.push('')}>
                       Add an item
                     </button>
-                    <div>
-                      <button type="submit">Submit</button>
-                    </div>
                   </div>
                 )}
               />
+              <Field component="select" name="status">
+                <option value="draft">Draft</option>
+                <option value="sended">Sended</option>
+              </Field>
+              <div>
+                <button type="submit">Submit</button>
+              </div>
             </Formu>
           )}
         />

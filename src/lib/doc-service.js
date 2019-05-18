@@ -11,12 +11,12 @@ class DocService {
 
   get() {
     return this.api.get('/doc')
-      .then(({ data }) => data);
+      .then(({ data }) => ({ data }));
   }
 
   getById(id) {
     return this.api.get(`/doc/${id}`)
-      .then(({ data }) => data);
+      .then(({ data }) => ({ data }));
   }
 
   add(inputData) {

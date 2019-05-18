@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import BillList from '../components/BillList';
+import ClientList from '../components/clients/ClientList';
+import CompanyList from '../components/company/CompanyList';
 
 const Dash = () => (
   <>
-    <BillList />
-    <Link to="/new"><button type="button">Add</button></Link>
+    {/* <BillList /> */}
+    <ClientList />
+    <CompanyList />
   </>
 );
 export default Dash;

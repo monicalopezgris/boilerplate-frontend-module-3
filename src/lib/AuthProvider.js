@@ -1,3 +1,6 @@
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable arrow-parens */
+/* eslint-disable react/no-multi-comp */
 import React, { Component } from "react";
 import auth from "./auth-service";
 const { Consumer, Provider } = React.createContext();
@@ -93,11 +96,11 @@ class AuthProvider extends Component {
           user: null
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
   render() {
     const { isLoading, isLoggedin, user } = this.state;
-    return isLoading ? <div>loading</div>:(
+    return isLoading ? <div>loading</div> : (
       <Provider
         value={{
           isLoggedin,

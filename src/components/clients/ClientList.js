@@ -8,6 +8,8 @@ import ClientListItem from './ClientListItem';
 const Wrapper = styled.div`
   height: 100%;
   background-color: ${props => props.theme.color.secondaryColor};
+  display:flex;
+  flex-direction: column;
 `;
 
 class ClientList extends Component {
@@ -16,6 +18,7 @@ class ClientList extends Component {
   }
 
   async componentDidMount() {
+    console.log('aa')
     const clients = await clientService.get();
     this.setState({ clients: clients.data });
   }
@@ -31,6 +34,7 @@ class ClientList extends Component {
         <Link to="/client/new"><button type="button">Add</button></Link>
         {
           clients.map((client) => {
+            console.log(client);
             const { _id: id, name } = client;
             return <ClientListItem key={id} itemData={{ id, name }} onDelete={this.onDelete} />;
           })
