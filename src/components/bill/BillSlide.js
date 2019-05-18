@@ -3,10 +3,14 @@ import { PDFExport } from '@progress/kendo-react-pdf';
 import styled from 'styled-components';
 import BillSlideClient from './BillSlideClient';
 import BillSlideItems from './BillSlideItems';
+import BillSlideInfo from './BillSlideInfo';
 
 const PDF = styled(PDFExport)`
-  height: 100%;
-  background-color: ${props => props.theme.color.secondaryColor};
+  // height: 100%;
+  // background-color: ${props => props.theme.color.secondaryColor};
+`;
+const Bill = styled.div`
+// margin-left:-100vw;
 `;
 
 class BillSlide extends Component {
@@ -16,8 +20,35 @@ class BillSlide extends Component {
     this.bill.save();
   };
 
+  calcItemTotalPrice = (items) => {
+    items.forEach((item) => {
+      const { priceUnit, units } = item;
+      item.totalPriceItem = priceUnit * units;
+    });
+  }
+
+  getSum = (total, num) => total + num
+
+  calcSubtotal = (items) => {
+    const aux = [];
+    items.forEach((item) => {
+      aux.push(item.totalPriceItem);
+    });
+    const totalPrice = aux.reduce(this.getSum);
+    items.subtotal = totalPrice;
+  }
+
+  calcTaxes = (items) => {
+    const { subtotal } = items;
+    items.total = subtotal + (subtotal * 60) / 100;
+  }
+
   render() {
-    const { client, items } = this.props;
+    const { bill: { data: { client, items }, _id: id } } = this.props;
+    this.calcItemTotalPrice(items);
+    this.calcSubtotal(items);
+    this.calcTaxes(items);
+
     return (
       <>
         <button type="button" onClick={this.exportPDF}>download</button>
@@ -28,10 +59,11 @@ class BillSlide extends Component {
           no-return-assign
           ref={r => this.bill = r}
         >
-          <div>
+          <Bill>
+            <BillSlideInfo data={id} />
             <BillSlideClient data={client} />
             <BillSlideItems data={items} />
-          </div>
+          </Bill>
         </PDF>
       </>
     );
@@ -39,4 +71,3 @@ class BillSlide extends Component {
 }
 
 export default BillSlide;
-

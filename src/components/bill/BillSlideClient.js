@@ -2,21 +2,23 @@ import React from 'react';
 
 
 const BillSlideClient = ({ data }) => {
-  const name = data ? data.name : '';
-  const nif = data ? data.nif : '';
+  const { name, nif, address: { street, streetNum, postalCode, country } } = data;
   return (
     <div className="client">
-      <h2>Client</h2>
-      <p>{name}</p>
-      <p>{nif}</p>
-      {/* <p>
-        {data ? street : ''}
-        ,
-        {data ? streetNum : ''}
-      </p>
-      <p>{data ? postalCode : ''}</p>
-      <p>{data ? country : ''}</p> */}
-
+      <div>
+        <h3>Facturar a:</h3>
+        <p>{name}</p>
+        <p>{nif}</p>
+        <p>{street}, {streetNum}</p>
+        <p>{postalCode}, {country}</p>
+      </div>
+      <div>
+        <h3>Enviar a:</h3>
+        <p>{name}</p>
+        <p>{nif}</p>
+        <p>{street}, {streetNum}</p>
+        <p>{postalCode}, {country}</p>
+      </div>
     </div>
   );
 };

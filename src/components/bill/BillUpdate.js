@@ -39,6 +39,7 @@ class BillUpdate extends Component {
                   <>
                     <UpdateDoc bill={item} />
                     <BillSlide
+                      bill={item}
                       client={client}
                       items={items}
                     />
