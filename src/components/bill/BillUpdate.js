@@ -1,93 +1,70 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import BillSlide from './BillSlide';
 import UpdateDoc from './UpdateDoc';
+import Loading from '../Loading'
 import doc from '../../lib/doc-service';
+
+const Wrapper = styled.div`
+  display: flex;
+`;
+const Form = styled.div`
+  flex:1;
+`;
+const Slide = styled.div`
+flex:2;
+`;
 
 class BillUpdate extends Component {
   state = {
     isLoading: true,
-    item: {},
+    item: undefined,
     error: false,
   }
 
-  async componentDidMount() {
-    try {
-      const { match: { params: { id } } } = this.props;
-      const item = await doc.getById(id);
-      this.setState({
-        item: item.data,
-        isLoading: false,
+  componentDidMount() {
+    this.onChange();
+  }
+
+  onChange = () => {
+    const { match: { params: { id } } } = this.props;
+    doc.getById(id)
+      .then((item) => {
+        const { data } = item;
+        this.setState({
+          item: data,
+          isLoading: false,
+        });
+      })
+      .catch(() => {
       });
-    } catch (error) {
-      this.setState({
-        error,
-      });
-    }
   }
 
   render() {
     const { isLoading, item } = this.state;
-    const client = isLoading === false && item.data ? item.data.client : null;
-    const items = isLoading === false && item.data ? item.data.items : null;
-    const status = isLoading === false && item ? item.status : null;
-
-    return (
-      <>
-        {
-          // eslint-disable-next-line no-nested-ternary
-          isLoading === false
+    if (!isLoading) {
+      const { item: { status } } = this.state;
+      return (
+        <Wrapper>
+          {status === 'draft'
             ? (
-              status === 'draft'
-                ? (
-                  <>
-                    <UpdateDoc bill={item} />
-                    <BillSlide
-                      bill={item}
-                      client={client}
-                      items={items}
-                    />
-                  </>
-                )
-                : (
-                  <div>
-                    <h2>
-                      Client
-                    </h2>
-                    <p>{client.name}</p>
-                    <p>{client.name}</p>
-                    <h2>
-                      Items
-                    </h2>
-                    <p>{client.name}</p>
-                    <h2>Items</h2>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Item</th>
-                          <th>Units</th>
-                          <th>Price Units</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {items.map((item, index) => {
-                          const { item: itemName, units, priceUnit } = item;
-                          return (
-                            <tr key={index}>
-                              <td>{itemName}</td>
-                              <td>{units}</td>
-                              <td>{priceUnit}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                )
+              <>
+                <Form>
+                  <UpdateDoc bill={item} onChange={this.onChange} />
+                </Form>
+                <Slide>
+                  <BillSlide bill={item} />
+                </Slide>
+              </>
             )
-            : <span />
-        }
-      </>
-    );
+            : (
+              <BillSlide bill={item} />
+            )
+          }
+        </Wrapper>
+      );
+    }
+    return <Loading />;
   }
 }
 

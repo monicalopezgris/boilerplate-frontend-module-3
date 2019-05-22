@@ -10,6 +10,36 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.color.secondaryColor};
   display:flex;
   flex-direction: column;
+  flex:1;
+`;
+const Header = styled.div`
+  flex:1;
+  text-decoration: none;
+  display:flex;
+  justify-content: space-around;
+  font-family:${props => props.theme.font};
+  color:white;
+  padding:1rem 0;
+  font-weight:bold;
+  text-transform: uppercase;
+  background-color:${props => props.theme.color.primaryColor};
+`;
+const Span = styled.span`
+  flex:1;
+  padding: 0 1rem;
+`;
+const LinkButton = styled(Link)`
+  display:flex;
+  justify-content:center;
+`;
+const Button = styled.button`
+ border:none;
+ background-color:${props => props.theme.color.primaryColor};
+ height:2rem;
+ width:2rem;
+ border-radius:50%;
+ color:white;
+ font-weight: bold;
 `;
 
 class ClientList extends Component {
@@ -18,7 +48,6 @@ class ClientList extends Component {
   }
 
   async componentDidMount() {
-    console.log('aa')
     const clients = await clientService.get();
     this.setState({ clients: clients.data });
   }
@@ -31,14 +60,16 @@ class ClientList extends Component {
     const { clients } = this.state;
     return (
       <Wrapper>
-        <Link to="/client/new"><button type="button">Add</button></Link>
+        <Header>
+          <Span>Client name</Span>
+        </Header>
         {
           clients.map((client) => {
-            console.log(client);
             const { _id: id, name } = client;
             return <ClientListItem key={id} itemData={{ id, name }} onDelete={this.onDelete} />;
           })
         }
+        <LinkButton to="/client/new"><Button type="button">+</Button></LinkButton>
       </Wrapper>
     );
   }

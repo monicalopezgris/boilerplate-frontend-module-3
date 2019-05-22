@@ -5,16 +5,21 @@ import BillSlideClient from './BillSlideClient';
 import BillSlideItems from './BillSlideItems';
 import BillSlideInfo from './BillSlideInfo';
 
-const PDF = styled(PDFExport)`
-  // height: 100%;
-  // background-color: ${props => props.theme.color.secondaryColor};
-`;
 const Bill = styled.div`
-// margin-left:-100vw;
+padding:2rem;
+`;
+
+const Button = styled.button`
+ border:none;
+ background-color:${props => props.theme.color.primaryColor};
+ height:3rem;
+ width:3rem;
+ border-radius:50%;
+ color:white;
+ font-weight: bold;
 `;
 
 class BillSlide extends Component {
-  state = {}
 
   exportPDF = () => {
     this.bill.save();
@@ -48,11 +53,9 @@ class BillSlide extends Component {
     this.calcItemTotalPrice(items);
     this.calcSubtotal(items);
     this.calcTaxes(items);
-
     return (
       <>
-        <button type="button" onClick={this.exportPDF}>download</button>
-        <PDF
+        <PDFExport
           paperSize="A4"
           fileName="bill.pdf"
           eslint-disable-next-line
@@ -64,7 +67,8 @@ class BillSlide extends Component {
             <BillSlideClient data={client} />
             <BillSlideItems data={items} />
           </Bill>
-        </PDF>
+        </PDFExport>
+        <Button type="button" onClick={this.exportPDF}>V</Button>
       </>
     );
   }

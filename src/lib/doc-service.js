@@ -19,9 +19,9 @@ class DocService {
   getById(id) {
     return this.api.get(`/doc/${id}`)
       .then(({ data }) => ({ data }))
-    // .catch((error) => {
-    //   throw new Error('I crashed!');
-    // });
+      .catch((error) => {
+        throw new Error('I crashed!');
+      });
   }
 
   add(inputData) {

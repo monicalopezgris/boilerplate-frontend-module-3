@@ -1,14 +1,14 @@
 import React from 'react';
 
 
-const BillSlideInfo = ({ data: id }) => {
+const BillSlideInfo = ({ data: ref }) => {
   return (
     <div>
       <div>
-        <h3>Info</h3>
-        <p>Ref: {id}</p>
+        <img alt="logo" src="/logo.png" />
+        <p>Ref: {ref}</p>
       </div>
-    </div>
+    </div >
   );
 };
 

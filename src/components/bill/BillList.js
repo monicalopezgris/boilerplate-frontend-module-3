@@ -10,6 +10,36 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.color.secondaryColor};
 `;
 
+const Header = styled.div`
+  flex:1;
+  text-decoration: none;
+  display:flex;
+  justify-content: space-around;
+  font-family:${props => props.theme.font};
+  color:white;
+  padding:1rem 0;
+  font-weight:bold;
+  text-transform: uppercase;
+  background-color:${props => props.theme.color.primaryColor};
+`;
+const Span = styled.span`
+  flex:1;
+  padding: 0 1rem;
+`;
+const LinkButton = styled(Link)`
+  display:flex;
+  justify-content:center;
+`;
+const Button = styled.button`
+ border:none;
+ background-color:${props => props.theme.color.primaryColor};
+ height:2rem;
+ width:2rem;
+ border-radius:50%;
+ color:white;
+ font-weight: bold;
+`;
+
 class BillList extends Component {
   state = {
     bills: [],
@@ -28,13 +58,19 @@ class BillList extends Component {
     const { bills } = this.state;
     return (
       <Wrapper>
-        <Link to="/bill/new"><button type="button">Add</button></Link>
+        <Header>
+          <Span>ref</Span>
+          <Span>name</Span>
+          <Span>status</Span>
+          <Span> Last update </Span>
+        </Header>
         {
           bills.map((bill) => {
             const { _id: id } = bill;
             return <BillListItem key={id} itemData={bill} onDelete={this.onDelete} />;
           })
         }
+        <LinkButton to="/bill/new"><Button type="button">+</Button></LinkButton>
       </Wrapper>
     );
   }

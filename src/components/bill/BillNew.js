@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
-// import BillSlide from './BillSlide';
+import styled from 'styled-components';
+import BillSlide from './BillSlide';
 import NewDoc from './NewDoc';
 
+const Wrapper = styled.div`
+  display: flex;
+`;
+const Form = styled.div`
+  flex:1;
+`;
+const Slide = styled.div`
+flex:2;
+`;
 
 class BillNew extends Component {
-  state = {}
+  state = {
+    data: false,
+  }
 
   render() {
-    // const {  } = this.state;
-    // const client = isLoading === false && item.data ? item.data.client : null;
-    // const items = isLoading === false && item.data ? item.data.items : null;
-    // const status = isLoading === false && item ? item.status : null;
+    const { data } = this.state;
     return (
-      <>
-        <NewDoc />
-        {/* <BillSlide /> */}
-      </>
+      <Wrapper>
+        <Form>
+          <NewDoc />
+        </Form>
+        <Slide>
+          {
+            data
+              ? <BillSlide />
+              : <div>Waiting</div>
+          }
+        </Slide>
+
+      </Wrapper>
+
     );
   }
 }

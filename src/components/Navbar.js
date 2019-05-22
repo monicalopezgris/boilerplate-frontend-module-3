@@ -7,20 +7,14 @@ const Navbar = styled.div`
   background-color: ${props => props.theme.color.primaryColor};
   display:flex;
   flex-direction: column;
-  height: 5vh;
+  width:10rem;
+  height: 100vh;
 `;
 const NavAux = styled.div`
 display: flex;
-flex-direction: row;
-justify-content: space-between;
+flex-direction: column;
 `;
 const NavBody = styled.div`
-background-color: ${props => props.theme.color.primaryColor};
-position:fixed;
-top:5vh;
-right:0;
-left:0;
-height:95vh;
 display: flex;
 flex-direction: column;
 `;
@@ -28,47 +22,78 @@ const Button = styled.button`
 background-color: transparent;
 color: white;
 font-weight: bold;
+font-size:1.2rem;
 border: none;
 `;
+const LogoWrapper = styled.div`
+margin: 1rem auto;
+width:7rem
+height:7rem;
+border-radius: 50%;
+background-color:white;
+display:flex;
+align-content: center;
+justify-content: center;
+`;
+const Logo = styled.img`
+  width:80%
+  height:auto;
+`;
+
 
 class NavBar extends Component {
-  state = {
-    // menu: false,
-    aux: false,
-  }
+  // state = {
+  //   bill: false,
+  //   client: false,
+  //   company: false,
+  // }
 
   handleBack = () => {
     const { history } = this.props;
     history.go(-1);
   };
 
-  handleClick = () => {
-    this.setState(prevState => ({
-      aux: !prevState.aux,
-    }));
-  }
+  // handleClick = (section) => {
+  //   console.log(section)
+  //   this.setState(prevState => ({
+  //     section: !prevState.section,
+  //   }));
+  // }
 
   render() {
     const { logout } = this.props;
-    const { aux } = this.state;
+    // const { aux } = this.state;
     return (
       <Navbar>
-        <NavAux>
+        <Link to="/">
+          <LogoWrapper>
+            <Logo alt="logo" src="/logo.png" />
+          </LogoWrapper>
+        </Link>
+        <NavAux onClick={this.handleClick}>
           <Button type="button" onClick={this.handleBack}> back </Button>
-          <img alt="logo" onClick={this.handleClick} src="/logo_sm.png" />
           <Button onClick={logout}>logout</Button>
+          <NavBody>
+            {/* <div>Bill</div>
+            <Link to="/bill/new">New</Link>
+            <Link to="/bill/update">Update</Link>
+            <div>Client</div>
+            <Link to="/client/new">New</Link>
+            <Link to="/client/update">Update</Link> */}
+            {/* <button type="button" onClick={() => { this.handleClick('bill'); }}>Bills</button>
+            <button type="button" onClick={() => { this.handleClick('client'); }}>Clients</button>
+            <button type="button" onClick={() => { this.handleClick('company'); }}>Company</button> */}
+          </NavBody>
         </NavAux>
-        {
+        {/* {
           aux
             ? (
               <NavBody onClick={this.handleClick}>
-                <Link to="/bill">Bills</Link>
-                <Link to="/client">Clients</Link>
-                <Link to="/company">Company</Link>
+
               </NavBody>
             )
             : <span />
-        }
+        } */}
 
         {/* <Switch>
           <NavAux menuDisplay={aux}>

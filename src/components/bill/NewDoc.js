@@ -46,9 +46,18 @@ class NewDocForm extends Component {
     savedClient: false,
   }
 
-  handleSubmit = (values) => {
+  getRef = async (values) => {
+    const initial = 'bill_';
+    const items = await doc.get();
+    const count = (Object.keys(items.data).length) + 1;
+    values.ref = initial.concat(count);
+    return (values);
+  }
+
+  handleSubmit = async (values) => {
     const { history } = this.props;
-    doc.add(values);
+    await this.getRef(values);
+    await doc.add(values);
     history.push('/');
   }
 
@@ -77,7 +86,7 @@ class NewDocForm extends Component {
           }}
           render={({ values }) => (
             <Formu>
-              <Field type="hidden" name="id" />
+              <Field type="hidden" name="ref" />
               <Heading> Client </Heading>
               <Label> Saved client?</Label>
               <Field type="checkbox" name="savedClient" checked={values.savedClient} onChange={this.handleChange} />
@@ -168,7 +177,6 @@ class NewDocForm extends Component {
               <Field component="select" name="status">
                 <option value="draft">Draft</option>
                 <option value="Closed">Closed</option>
-                <option value="sended">Sended</option>
               </Field>
               <div>
                 <button type="submit">Submit</button>

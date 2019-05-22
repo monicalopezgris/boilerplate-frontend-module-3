@@ -7,26 +7,30 @@ import { withRouter } from 'react-router-dom';
 import { billSchema } from '../../lib/validationSchemas';
 import doc from '../../lib/doc-service';
 
-
+const Wrapper = styled.div`
+  height:100vh;
+  overflow: scroll;
+`;
 const Formu = styled(Form)`
   margin: 0;
   width: 100%;
   background-color:${props => props.theme.color.secondaryColor};
-  font-size: 1.3rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
   padding: 0 15% 0 15%;
   color: black;
+ 
 `;
 const Item = styled.div`
   border-bottom: 1px solid grey;
 `;
 const Label = styled.span`
-  text-align: center;
+  // text-align: center;
   margin: 5% 0;
 `;
 const Heading = styled.span`
-  font-size:1.5;
+  font-size:1.3;
   font-weight:bold;
   text-align: center;
   margin: 5% 0;
@@ -49,15 +53,14 @@ class UpdateDoc extends Component {
 
   handleSubmit = (values) => {
     const { id } = values;
-    const { history } = this.props;
-    console.log(values);
+    const { onChange } = this.props;
     doc.update(id, values)
       .then((data) => {
+        onChange();
       })
       .catch((error) => {
         throw new Error(error);
       });
-    history.push('/');
   }
 
   render() {
@@ -78,7 +81,7 @@ class UpdateDoc extends Component {
     } = this.props;
 
     return (
-      <>
+      <Wrapper>
         <Formik
           className="form"
           initialValues={
@@ -172,6 +175,7 @@ class UpdateDoc extends Component {
                   </div>
                 )}
               />
+              <Heading>Status</Heading>
               <Field component="select" name="status">
                 <option value="draft">Draft</option>
                 <option value="sended">Sended</option>
@@ -182,7 +186,7 @@ class UpdateDoc extends Component {
             </Formu>
           )}
         />
-      </>
+      </Wrapper>
     );
   }
 }
