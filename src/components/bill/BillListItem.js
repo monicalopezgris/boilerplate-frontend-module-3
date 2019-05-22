@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -44,7 +44,7 @@ class BillListItem extends Component {
       itemData: {
         _id: id,
         ref,
-        updatedAt,
+        // updatedAt,
         status,
         data: {
           client: {
@@ -60,11 +60,11 @@ class BillListItem extends Component {
           <Span>{ref}</Span>
           <Span>{name}</Span>
           <Span>{status}</Span>
-          <Span>
+          {/* <Span>
             <Moment format="DD/MM/YYYY LT">
               {updatedAt}
             </Moment>
-          </Span>
+          </Span> */}
         </WrapperAsLink>
         <Button type="button" onClick={() => { this.handleDelete(id); }}> X </Button>
       </Wrapper>

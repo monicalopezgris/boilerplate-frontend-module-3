@@ -36,35 +36,41 @@ class BillUpdate extends Component {
           isLoading: false,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        this.setState({
+          error: 'Ops.... Get in touch with the admin to solve the error',
+        });
       });
   }
 
   render() {
-    const { isLoading, item } = this.state;
-    if (!isLoading) {
-      const { item: { status } } = this.state;
-      return (
-        <Wrapper>
-          {status === 'draft'
-            ? (
-              <>
-                <Form>
-                  <UpdateDoc bill={item} onChange={this.onChange} />
-                </Form>
-                <Slide>
-                  <BillSlide bill={item} />
-                </Slide>
-              </>
-            )
-            : (
-              <BillSlide bill={item} />
-            )
-          }
-        </Wrapper>
-      );
+    const { isLoading, item, error } = this.state;
+    if (!error) {
+      if (!isLoading) {
+        const { item: { status } } = this.state;
+        return (
+          <Wrapper>
+            {status === 'draft'
+              ? (
+                <>
+                  <Form>
+                    <UpdateDoc bill={item} onChange={this.onChange} />
+                  </Form>
+                  <Slide>
+                    <BillSlide bill={item} />
+                  </Slide>
+                </>
+              )
+              : (
+                <BillSlide bill={item} />
+              )
+            }
+          </Wrapper>
+        );
+      }
+      return <Loading />;
     }
-    return <Loading />;
+    return <div>{error}</div>;
   }
 }
 

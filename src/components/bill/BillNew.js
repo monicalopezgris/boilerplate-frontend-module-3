@@ -10,7 +10,7 @@ const Form = styled.div`
   flex:1;
 `;
 const Slide = styled.div`
-flex:2;
+  flex:2;
 `;
 
 class BillNew extends Component {
@@ -25,13 +25,7 @@ class BillNew extends Component {
         <Form>
           <NewDoc />
         </Form>
-        <Slide>
-          {
-            data
-              ? <BillSlide />
-              : <div>Waiting</div>
-          }
-        </Slide>
+        <Slide />
 
       </Wrapper>
 
