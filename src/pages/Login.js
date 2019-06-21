@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin:auto;
 `;
 const Logo = styled.img`
   margin:-20% auto 20% auto;

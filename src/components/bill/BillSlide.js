@@ -49,7 +49,7 @@ class BillSlide extends Component {
   }
 
   render() {
-    const { bill: { data: { client, items }, _id: id } } = this.props;
+    const { bill: { data: { client, items }, _id: id, ref } } = this.props;
     this.calcItemTotalPrice(items);
     this.calcSubtotal(items);
     this.calcTaxes(items);
@@ -63,7 +63,7 @@ class BillSlide extends Component {
           ref={r => this.bill = r}
         >
           <Bill>
-            <BillSlideInfo data={id} />
+            <BillSlideInfo data={ref} />
             <BillSlideClient data={client} />
             <BillSlideItems data={items} />
           </Bill>

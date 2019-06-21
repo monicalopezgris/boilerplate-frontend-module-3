@@ -4,6 +4,7 @@ import BillSlide from './BillSlide';
 import UpdateDoc from './UpdateDoc';
 import Loading from '../Loading'
 import doc from '../../lib/doc-service';
+import ErrorPage from '../../pages/Error';
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,7 +71,7 @@ class BillUpdate extends Component {
       }
       return <Loading />;
     }
-    return <div>{error}</div>;
+    return <ErrorPage />;
   }
 }
 

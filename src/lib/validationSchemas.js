@@ -1,6 +1,6 @@
 import { string, number, object, array } from 'yup';
 
-export const billSchema = object({
+export const billSchema = {
   name: string()
     .required()
     .min(2, 'Too short'),
@@ -37,7 +37,7 @@ export const billSchema = object({
           priceUnit: number(),
         }),
     ),
-});
+};
 
 export const loginSchema = object({
   username: string()

@@ -40,6 +40,7 @@ const Fieldu = styled(Field)`
   border: 2px solid transparent;
   font-size: 1rem;
   text-align: center;
+  width:100%;
   &: hover{
     border-color: ${props => props.theme.color.primaryColor};
   }
@@ -80,12 +81,23 @@ class UpdateDoc extends Component {
       },
     } = this.props;
 
+    const initialValues = {
+      id,
+      status,
+      items,
+      name,
+      cif,
+      street,
+      streetNum,
+      postalCode,
+      country,
+    };
     return (
       <Wrapper>
         <Formik
           className="form"
           initialValues={
-            { id, status, items, name, cif, street, streetNum, postalCode, country }
+            initialValues
           }
           validationSchema={billSchema}
           onSubmit={(values, actions) => {
@@ -148,7 +160,7 @@ class UpdateDoc extends Component {
                     {values.items && values.items.length > 0 ? (
                       values.items.map((item, index) => (
                         <Item key={index}>
-                          <Label>Item</Label>
+                          <Label htmlFor={`items[${index}].item`}>Item</Label>
                           <Fieldu name={`items[${index}].item`} placeholder={item.item} value={item.item} />
                           <ErrorMessage name={`items[${index}].item`} />
                           <Label>Units</Label>

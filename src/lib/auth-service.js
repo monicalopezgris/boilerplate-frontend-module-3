@@ -29,6 +29,14 @@ class Auth {
   me() {
     return this.auth.get('/auth/me').then(response => response.data);
   }
+
+  meData() {
+    return this.auth.get('/auth/meData')
+      .then(({ data }) => ({ data }))
+      .catch((error) => {
+        throw new Error('I crashed!');
+      });
+  }
 }
 
 const auth = new Auth();

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import BillSlide from './BillSlide';
+// import BillSlide from './BillSlide';
 import NewDoc from './NewDoc';
 
 const Wrapper = styled.div`
@@ -13,13 +13,9 @@ const Slide = styled.div`
   flex:2;
 `;
 
+// eslint-disable-next-line react/prefer-stateless-function
 class BillNew extends Component {
-  state = {
-    data: false,
-  }
-
   render() {
-    const { data } = this.state;
     return (
       <Wrapper>
         <Form>

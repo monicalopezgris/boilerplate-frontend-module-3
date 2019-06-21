@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dash from './pages/Dash';
+import ErrorPage from './pages/Error';
 import BillNew from './components/bill/BillNew';
 import BillUpdate from './components/bill/BillUpdate';
 
@@ -34,7 +35,8 @@ class App extends Component {
                 <AnonRoute exact path="/login" component={Login} />
                 <PrivateRoute path="/bill/new" component={BillNew} />
                 <PrivateRoute path="/bill/:id" component={BillUpdate} />
-                <PrivateRoute path="/" component={Dash} />
+                <PrivateRoute exact path="/" component={Dash} />
+                <PrivateRoute path="/" component={ErrorPage} />
               </Switch>
             </Wrapper>
             <GlobalStyle />

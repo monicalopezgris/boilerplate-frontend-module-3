@@ -45,13 +45,18 @@ class BillList extends Component {
     bills: [],
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getBills();
+  }
+
+  getBills = async () => {
     const bills = await doc.get();
     this.setState({ bills: bills.data });
   }
 
   onDelete = (id) => {
     doc.delete(id);
+    this.getBills();
   }
 
   render() {
