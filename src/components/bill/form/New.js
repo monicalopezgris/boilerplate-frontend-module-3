@@ -3,10 +3,34 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import ids from 'short-id';
 import { withRouter } from 'react-router-dom';
-import doc from '../../lib/doc-service';
-import auth from '../../lib/auth-service';
+import doc from '../../../lib/doc-service';
+import auth from '../../../lib/auth-service';
+
+const Form = styled.form`
+  border: 1px solid red;
+  display:flex;
+  flex-direction:column;
+`;
+const ObjectsWrapper = styled.div`
+  display:flex;
+  flex-direction:column;
+`;
+const Input = styled.input`
+  border-radius: 10px;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  text-align: center;
+  &: hover{
+    border-color: ${props => props.theme.color.primaryColor};
+  }
+  &: focus{
+    border-color: ${props => props.theme.color.primaryColor};
+  }
+`;
+
 
 class NewDocForm extends Component {
   constructor(props) {
@@ -102,7 +126,7 @@ class NewDocForm extends Component {
     } = this.state;
 
     return (
-      <form
+      <Form
         onChange={this.handleInputChange}
         onSubmit={this.handleSubmit}
       >
@@ -135,7 +159,7 @@ class NewDocForm extends Component {
               <label htmlFor={name}>
                 Name:
               </label>
-              <input
+              <Input
                 name="name"
                 type="text"
               />
@@ -143,7 +167,7 @@ class NewDocForm extends Component {
               <label htmlFor={cif}>
                 Cif:
               </label>
-              <input
+              <Input
                 name="cif"
                 type="text"
               />
@@ -151,7 +175,7 @@ class NewDocForm extends Component {
               <label htmlFor={street}>
                 Street:
               </label>
-              <input
+              <Input
                 name="street"
                 type="text"
               />
@@ -159,7 +183,7 @@ class NewDocForm extends Component {
               <label htmlFor={streetNum}>
                 Street Number:
               </label>
-              <input
+              <Input
                 name="streetNum"
                 type="number"
               />
@@ -167,7 +191,7 @@ class NewDocForm extends Component {
               <label htmlFor={postalCode}>
                 Postal Code:
               </label>
-              <input
+              <Input
                 name="postalCode"
                 type="number"
               />
@@ -175,7 +199,7 @@ class NewDocForm extends Component {
               <label htmlFor={country}>
                 Country:
               </label>
-              <input
+              <Input
                 name="country"
                 type="text"
               />
@@ -187,7 +211,7 @@ class NewDocForm extends Component {
             const unitsIndex = `units-${index}`;
             const priceUnitIndex = `priceUnits-${index}`;
             return (
-              <div key={index}>
+              <ObjectsWrapper key={index}>
                 <button
                   type="button"
                   data-id={index}
@@ -195,7 +219,7 @@ class NewDocForm extends Component {
                 <label htmlFor={itemIndex}>
                   Item
                 </label>
-                <input
+                <Input
                   type="text"
                   name="item"
                   data-id={index}
@@ -204,32 +228,35 @@ class NewDocForm extends Component {
                   className="item"
                 />
                 <br />
-                <label htmlFor={unitsIndex}>
-                  Units
+                <div>
+
+                  <label htmlFor={unitsIndex}>
+                    Units
                 </label>
-                <input
-                  type="number"
-                  defaultValue={1}
-                  name="units"
-                  data-id={index}
-                  id={unitsIndex}
-                  value={objects[index].units}
-                  className="units"
-                />
-                <br />
-                <label htmlFor={priceUnitIndex}>
-                  Price / Unit
+                  <Input
+                    type="number"
+                    defaultValue={1}
+                    name="units"
+                    data-id={index}
+                    id={unitsIndex}
+                    value={objects[index].units}
+                    className="units"
+                  />
+                  <br />
+                  <label htmlFor={priceUnitIndex}>
+                    Price / Unit
                 </label>
-                <input
-                  type="number"
-                  defaultValue={0}
-                  name="priceUnit"
-                  data-id={index}
-                  id={priceUnitIndex}
-                  value={objects[index].priceUnits}
-                  className="priceUnits"
-                />
-              </div>
+                  <Input
+                    type="number"
+                    defaultValue={0}
+                    name="priceUnit"
+                    data-id={index}
+                    id={priceUnitIndex}
+                    value={objects[index].priceUnits}
+                    className="priceUnits"
+                  />
+                </div>
+              </ObjectsWrapper>
             );
           })
         ) : (
@@ -237,7 +264,7 @@ class NewDocForm extends Component {
           )}
         <button type="button" onClick={this.handleAddObject}> Add item</button>
         <button type="submit">Send</button>
-      </form>
+      </Form>
     );
   }
 }

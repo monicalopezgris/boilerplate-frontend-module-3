@@ -4,8 +4,8 @@ import {
   Formik, Field, FieldArray, Form, ErrorMessage,
 } from 'formik';
 import { withRouter } from 'react-router-dom';
-import { billSchema } from '../../lib/validationSchemas';
-import doc from '../../lib/doc-service';
+import { billSchema } from '../../../lib/validationSchemas';
+import doc from '../../../lib/doc-service';
 
 const Wrapper = styled.div`
   height:100vh;

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import BillSlide from './BillSlide';
-import UpdateDoc from './UpdateDoc';
-import Loading from '../Loading'
+import UpdateDoc from './form/Update';
+import Loading from '../Loading';
 import doc from '../../lib/doc-service';
 import ErrorPage from '../../pages/Error';
 
