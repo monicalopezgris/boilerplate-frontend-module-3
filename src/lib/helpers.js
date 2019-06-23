@@ -8,4 +8,24 @@ export const helper = {
     values.ref = initial.concat(ids.generate());
     return (values);
   },
+  calcTaxes: (items) => {
+    const { subtotal } = items;
+    items.total = subtotal + (subtotal * 60) / 100;
+  },
+  getSum: (total, num) => total + num,
+  calcSubtotal: (items, getSumResult) => {
+    const aux = [];
+    items.forEach((item) => {
+      aux.push(item.totalPriceItem);
+    });
+    const totalPrice = aux.reduce((total, num) => total + num);
+    items.subtotal = totalPrice;
+  },
+  calcItemTotalPrice: (items) => {
+    items.forEach((item) => {
+      const { priceUnit, units } = item;
+      item.totalPriceItem = priceUnit * units;
+    });
+  },
+
 };

@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import BillSlide from './BillSlide';
+import BillSlide from './BillSlide';
 import { helper } from '../../lib/helpers';
-import ids from 'short-id';
 import NewDoc from './form/New';
 import doc from '../../lib/doc-service';
 import auth from '../../lib/auth-service';
+import client from '../../lib/client-service';
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,6 +50,36 @@ class BillNew extends Component {
     });
   }
 
+  async componentDidUpdate(prevProps, prevState) {
+    const { selectedClient, isClient } = this.state;
+    const { selectedClient: prevSelectedClient } = prevState;
+    if (isClient && prevSelectedClient != selectedClient) {
+      const data = await client.getById(selectedClient);
+      await this.setStateClient(data);
+    }
+  }
+
+  setStateClient = (data) => {
+    const {
+      name,
+      cif,
+      address: {
+        street,
+        postalCode,
+        streetNum,
+        country,
+      },
+    } = data.data;
+    this.setState({
+      name,
+      cif,
+      street,
+      postalCode,
+      streetNum,
+      country,
+    });
+  }
+
   onIsClient = () => {
     const { isClient } = this.state;
     if (isClient) {
@@ -76,7 +106,7 @@ class BillNew extends Component {
 
   onInputChange = (event) => {
     const { name, dataset } = event.target;
-    console.log(this.state);
+    console.log(this.state)
     if (dataset.id) {
       const { value } = event.target;
       const objects = [...this.state.objects]
@@ -96,11 +126,7 @@ class BillNew extends Component {
     try {
       const { history } = this.props;
       let values = this.state;
-      const { selectedClient } = values;
       values = await helper.getRef(values);
-      if (selectedClient) {
-        const client = await client.get(selectedClient)
-      }
       const result = await doc.add(values);
       const { _id: id } = result;
       history.push(`/bill/${id}`);
@@ -124,7 +150,9 @@ class BillNew extends Component {
             onIsClient={this.onIsClient}
           />
         </Form>
-        <Slide />
+        <Slide>
+          <BillSlide bill={this.state} />
+        </Slide>
 
       </Wrapper>
 

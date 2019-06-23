@@ -15,20 +15,20 @@ const Header = styled.h3`
 `;
 
 const BillSlideClient = ({ data }) => {
-  const { name, nif, address: { street, streetNum, postalCode, country } } = data;
+  const { name, cif, street, streetNum, postalCode, country } = data;
   return (
     <Clients className="client">
       <Client>
         <Header>Facturar a:</Header>
         <p>{name}</p>
-        <p>{nif}</p>
+        <p>{cif}</p>
         <p>{street}, {streetNum}</p>
         <p>{postalCode}, {country}</p>
       </Client>
       <Client>
         <Header>Enviar a:</Header>
         <p>{name}</p>
-        <p>{nif}</p>
+        <p>{cif}</p>
         <p>{street}, {streetNum}</p>
         <p>{postalCode}, {country}</p>
       </Client>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import styled from 'styled-components';
+import { helper } from '../../lib/helpers';
 import BillSlideClient from './BillSlideClient';
 import BillSlideItems from './BillSlideItems';
 import BillSlideInfo from './BillSlideInfo';
@@ -25,34 +26,26 @@ class BillSlide extends Component {
     this.bill.save();
   };
 
-  calcItemTotalPrice = (items) => {
-    items.forEach((item) => {
-      const { priceUnit, units } = item;
-      item.totalPriceItem = priceUnit * units;
-    });
-  }
-
-  getSum = (total, num) => total + num
-
-  calcSubtotal = (items) => {
-    const aux = [];
-    items.forEach((item) => {
-      aux.push(item.totalPriceItem);
-    });
-    const totalPrice = aux.reduce(this.getSum);
-    items.subtotal = totalPrice;
-  }
-
-  calcTaxes = (items) => {
-    const { subtotal } = items;
-    items.total = subtotal + (subtotal * 60) / 100;
-  }
-
   render() {
-    const { bill: { data: { client, items }, _id: id, ref } } = this.props;
-    this.calcItemTotalPrice(items);
-    this.calcSubtotal(items);
-    this.calcTaxes(items);
+    const {
+      bill: {
+        ref,
+        name,
+        cif,
+        street,
+        postalCode,
+        streetNum,
+        country,
+        objects: items,
+      },
+    } = this.props;
+
+    if (items) {
+      helper.calcItemTotalPrice(items);
+      // helper.calcSubtotal(items, helper.getSum(items.total));
+      // helper.calcTaxes(items);
+    };
+
     return (
       <>
         <PDFExport
@@ -64,11 +57,11 @@ class BillSlide extends Component {
         >
           <Bill>
             <BillSlideInfo data={ref} />
-            <BillSlideClient data={client} />
+            <BillSlideClient data={{ name, cif, street, streetNum, postalCode, country }} />
             <BillSlideItems data={items} />
           </Bill>
         </PDFExport>
-        <Button type="button" onClick={this.exportPDF}>V</Button>
+        <Button type="button" onClick={this.exportPDF}>PDF</Button>
       </>
     );
   }
