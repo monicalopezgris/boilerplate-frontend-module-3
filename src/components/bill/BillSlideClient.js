@@ -28,7 +28,6 @@ const BillSlideClient = ({ data }) => {
       <Client>
         <Header>Enviar a:</Header>
         <p>{name}</p>
-        <p>{cif}</p>
         <p>{street}, {streetNum}</p>
         <p>{postalCode}, {country}</p>
       </Client>

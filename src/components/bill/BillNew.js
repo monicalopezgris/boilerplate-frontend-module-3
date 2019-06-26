@@ -106,10 +106,9 @@ class BillNew extends Component {
 
   onInputChange = (event) => {
     const { name, dataset } = event.target;
-    console.log(this.state)
     if (dataset.id) {
       const { value } = event.target;
-      const objects = [...this.state.objects]
+      const objects = [...this.state.objects];
       objects[dataset.id][name] = value;
       this.setState({ objects });
     } else {
