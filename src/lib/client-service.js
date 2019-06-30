@@ -19,6 +19,11 @@ class ClientsService {
       .then(({ data }) => ({ data }));
   }
 
+  getByCif(cif) {
+    return this.api.get(`/clients/cif/${cif}`)
+      .then(({ data }) => ({ data }));
+  }
+
   add(inputData) {
     return this.api.post('/clients', inputData)
       .then(({ data }) => data);
