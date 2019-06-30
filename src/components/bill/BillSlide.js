@@ -39,7 +39,6 @@ class BillSlide extends Component {
         objects: items,
       },
     } = this.props;
-    console.log('props', this.props)
 
     if (items) {
       helper.calcItemTotalPrice(items);

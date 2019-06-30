@@ -38,11 +38,13 @@ class NewDocForm extends Component {
       onAddObject,
       onDeleteObject,
       onIsClient,
+      onClientSelect,
       state,
     } = this.props;
     const {
       ref, name, cif, street, postalCode, streetNum, country, isClient, clients, selectedClient, objects,
     } = state;
+    console.log(name)
 
     return (
       <Form
@@ -81,6 +83,7 @@ class NewDocForm extends Component {
               <Input
                 name="name"
                 type="text"
+                defaultValue={name}
               />
               <br />
               <label htmlFor={cif}>
@@ -89,6 +92,7 @@ class NewDocForm extends Component {
               <Input
                 name="cif"
                 type="text"
+                defaultValue={cif}
               />
               <br />
               <label htmlFor={street}>
@@ -97,6 +101,7 @@ class NewDocForm extends Component {
               <Input
                 name="street"
                 type="text"
+                defaultValue={street}
               />
               <br />
               <label htmlFor={streetNum}>
@@ -105,6 +110,7 @@ class NewDocForm extends Component {
               <Input
                 name="streetNum"
                 type="number"
+                defaultValue={streetNum}
               />
               <br />
               <label htmlFor={postalCode}>
@@ -113,6 +119,7 @@ class NewDocForm extends Component {
               <Input
                 name="postalCode"
                 type="number"
+                defaultValue={postalCode}
               />
               <br />
               <label htmlFor={country}>
@@ -121,6 +128,7 @@ class NewDocForm extends Component {
               <Input
                 name="country"
                 type="text"
+                defaultValue={country}
               />
             </>
           )}
@@ -140,7 +148,7 @@ class NewDocForm extends Component {
                   name="item"
                   data-id={index}
                   id={itemIndex}
-                  value={objects[index].item}
+                  defaultValue={objects[index].item}
                 />
                 <br />
                 <label htmlFor={unitsIndex}>
@@ -151,7 +159,7 @@ class NewDocForm extends Component {
                   name="units"
                   data-id={index}
                   id={unitsIndex}
-                  value={objects[index].units}
+                  defaultValue={objects[index].units}
                 />
                 <br />
                 <label htmlFor={priceUnitIndex}>
@@ -162,7 +170,7 @@ class NewDocForm extends Component {
                   name="priceUnit"
                   data-id={index}
                   id={priceUnitIndex}
-                  value={objects[index].priceUnits}
+                  defaultValue={objects[index].priceUnits}
                 />
                 <button
                   type="button"

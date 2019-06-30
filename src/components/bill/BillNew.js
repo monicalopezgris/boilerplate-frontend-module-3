@@ -28,7 +28,7 @@ class BillNew extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isClient: true,
+      isClient: false,
       clients: [],
       ref: undefined,
       selectedClient: undefined,
@@ -48,15 +48,6 @@ class BillNew extends Component {
     this.setState({
       clients,
     });
-  }
-
-  async componentDidUpdate(prevProps, prevState) {
-    const { selectedClient, isClient } = this.state;
-    const { selectedClient: prevSelectedClient } = prevState;
-    if (isClient && prevSelectedClient != selectedClient) {
-      const data = await client.getById(selectedClient);
-      await this.setStateClient(data);
-    }
   }
 
   setStateClient = (data) => {
@@ -106,16 +97,24 @@ class BillNew extends Component {
 
   onInputChange = (event) => {
     const { name, dataset } = event.target;
+    const { value } = event.target;
     if (dataset.id) {
-      const { value } = event.target;
       const objects = [...this.state.objects];
       objects[dataset.id][name] = value;
       this.setState({ objects });
+    } else if (name == 'selectedClient') {
+      const { isClient } = this.state;
+      if (isClient) {
+        client.getById(value)
+          .then((data) => {
+            this.setStateClient(data);
+          });
+      }
     } else {
       const { target } = event;
-      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const targetValue = target.type === 'checkbox' ? target.checked : target.value;
       this.setState({
-        [name]: value,
+        [name]: targetValue,
       });
     }
   }
@@ -147,6 +146,7 @@ class BillNew extends Component {
             onAddObject={this.onAddObject}
             onDeleteObject={this.onDeleteObject}
             onIsClient={this.onIsClient}
+            onClientSelect={this.onClientSelect}
           />
         </Form>
         <Slide>

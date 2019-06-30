@@ -46,15 +46,23 @@ class BillUpdate extends Component {
 
   async componentDidMount() {
     const { id } = await this.props.match.params;
-    const info = await doc.getById(id);
-    const { data } = info;
+    const bill = await doc.getById(id);
+    const { data } = bill;
+    const { data: savedClient } = await client.getByCif(data.data.client.cif);
+    if (savedClient.length <= 0) {
+      this.setState({
+        isClient: false,
+      });
+    }
     this.setStateClient(data);
+    console.log(this.state);
     const user = await auth.meData();
     const { clients } = user.data;
     this.setState({
       isLoading: false,
       clients,
     });
+
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -68,25 +76,26 @@ class BillUpdate extends Component {
 
   setStateClient = (data) => {
     const {
-      name,
-      cif,
-      address: {
-        street,
-        postalCode,
-        streetNum,
-        country,
-      },
-    } = data.data.client;
-    if (data.data.items) {
-      const { items } = data.data;
-      this.setState({
-        items,
-      });
-    }
-    const {
       status,
       ref,
+      client: {
+        name,
+        cif,
+        address: {
+          street,
+          postalCode,
+          streetNum,
+          country,
+        },
+      },
+      items,
     } = data.data;
+    // if (data.data.items) {
+    //   const { items } = data.data;
+    //   this.setState({
+    //     items,
+    //   });
+    // }
     this.setState({
       ref,
       name,
@@ -96,8 +105,8 @@ class BillUpdate extends Component {
       streetNum,
       country,
       status,
+      items,
     });
-    console.log('updateState', this.state)
   }
 
   onIsClient = () => {
