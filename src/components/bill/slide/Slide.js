@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import styled from 'styled-components';
-import { helper } from '../../lib/helpers';
-import BillSlideClient from './BillSlideClient';
-import BillSlideItems from './BillSlideItems';
-import BillSlideInfo from './BillSlideInfo';
+import { helper } from '../../../lib/helpers';
+import ClientPart from './ClientPart';
+import ItemsPart from './ItemsPart';
+import InfoPart from './InfoPart';
 
 const Bill = styled.div`
 padding:2rem;
@@ -20,7 +20,7 @@ const Button = styled.button`
  font-weight: bold;
 `;
 
-class BillSlide extends Component {
+class Slide extends Component {
 
   exportPDF = () => {
     this.bill.save();
@@ -39,11 +39,10 @@ class BillSlide extends Component {
         items,
       },
     } = this.props;
-
-    if (items) {
+    if (items.length > 0) {
       helper.calcItemTotalPrice(items);
-      // helper.calcSubtotal(items, helper.getSum(items.total));
-      // helper.calcTaxes(items);
+      helper.calcSubtotal(items, helper.getSum(items.total));
+      helper.calcTaxes(items);
     };
 
     return (
@@ -56,9 +55,9 @@ class BillSlide extends Component {
           ref={r => this.bill = r}
         >
           <Bill>
-            <BillSlideInfo data={ref} />
-            <BillSlideClient data={{ name, cif, street, streetNum, postalCode, country }} />
-            <BillSlideItems data={items} />
+            <InfoPart data={ref} />
+            <ClientPart data={{ name, cif, street, streetNum, postalCode, country }} />
+            <ItemsPart data={items} />
           </Bill>
         </PDFExport>
         <Button type="button" onClick={this.exportPDF}>PDF</Button>
@@ -67,4 +66,4 @@ class BillSlide extends Component {
   }
 }
 
-export default BillSlide;
+export default Slide;

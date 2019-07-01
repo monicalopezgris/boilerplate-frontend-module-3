@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import BillSlide from './BillSlide';
-import NewDoc from './form/New';
+import Slide from './slide/Slide';
+import Form from './Form';
 import Loading from '../Loading';
 import { helper } from '../../lib/helpers';
 import doc from '../../lib/doc-service';
@@ -11,20 +11,17 @@ import ErrorPage from '../../pages/Error';
 
 const Wrapper = styled.div`
   display: flex;
-  border:1px solid yellow;
   width:100%;
 `;
-const Form = styled.div`
+const FormWrapper = styled.div`
   flex:1;
-  border:1px solid purple;
   padding: 2%;
 `;
-const Slide = styled.div`
+const SlideWrapper = styled.div`
   flex:3;
-  border:1px solid green;
 `;
 
-class BillUpdate extends Component {
+class Update extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -159,13 +156,13 @@ class BillUpdate extends Component {
   }
 
   render() {
-    const { isLoading, item, error } = this.state;
+    const { isLoading, error } = this.state;
     if (!error) {
       if (!isLoading) {
         return (
           <Wrapper>
-            <Form>
-              <NewDoc
+            <FormWrapper>
+              <Form
                 state={this.state}
                 onInputChange={this.onInputChange}
                 onSubmit={this.onSubmit}
@@ -173,10 +170,10 @@ class BillUpdate extends Component {
                 onDeleteObject={this.onDeleteObject}
                 onIsClient={this.onIsClient}
               />
-            </Form>
-            <Slide>
-              <BillSlide bill={this.state} />
-            </Slide>
+            </FormWrapper>
+            <SlideWrapper>
+              <Slide bill={this.state} />
+            </SlideWrapper>
           </Wrapper>
         );
       }
@@ -186,4 +183,4 @@ class BillUpdate extends Component {
   }
 }
 
-export default BillUpdate;
+export default Update;

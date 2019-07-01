@@ -1,30 +1,27 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import BillSlide from './BillSlide';
+import Slide from './slide/Slide';
 import { helper } from '../../lib/helpers';
-import NewDoc from './form/New';
+import Form from './Form';
 import doc from '../../lib/doc-service';
 import auth from '../../lib/auth-service';
 import client from '../../lib/client-service';
 
 const Wrapper = styled.div`
   display: flex;
-  border:1px solid yellow;
   width:100%;
 `;
-const Form = styled.div`
+const FormWrapper = styled.div`
   flex:1;
-  border:1px solid purple;
   padding: 2%;
 `;
-const Slide = styled.div`
+const SlideWrapper = styled.div`
   flex:3;
-  border:1px solid green;
 `;
 
 // eslint-disable-next-line react/prefer-stateless-function
-class BillNew extends Component {
+class New extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +35,7 @@ class BillNew extends Component {
       streetNum: undefined,
       postalCode: undefined,
       country: undefined,
-      objects: [],
+      items: [],
     };
   }
 
@@ -82,16 +79,16 @@ class BillNew extends Component {
 
   onAddObject = () => {
     this.setState(prevState => ({
-      objects: [...prevState.objects, { item: '', units: 0, priceUnit: 0 }],
+      items: [...prevState.items, { item: '', units: 0, priceUnit: 0 }],
     }));
   }
 
   onDeleteObject = (event) => {
-    const { objects } = this.state;
+    const { items } = this.state;
     const { dataset } = event.target;
-    objects.splice(dataset.id, 1);
+    items.splice(dataset.id, 1);
     this.setState({
-      objects,
+      items,
     });
   }
 
@@ -99,9 +96,9 @@ class BillNew extends Component {
     const { name, dataset } = event.target;
     const { value } = event.target;
     if (dataset.id) {
-      const objects = [...this.state.objects];
-      objects[dataset.id][name] = value;
-      this.setState({ objects });
+      const items = [...this.state.items];
+      items[dataset.id][name] = value;
+      this.setState({ items });
     } else if (name == 'selectedClient') {
       const { isClient } = this.state;
       if (isClient) {
@@ -138,8 +135,8 @@ class BillNew extends Component {
   render() {
     return (
       <Wrapper>
-        <Form>
-          <NewDoc
+        <FormWrapper>
+          <Form
             state={this.state}
             onInputChange={this.onInputChange}
             onSubmit={this.onSubmit}
@@ -148,10 +145,10 @@ class BillNew extends Component {
             onIsClient={this.onIsClient}
             onClientSelect={this.onClientSelect}
           />
-        </Form>
-        <Slide>
-          <BillSlide bill={this.state} />
-        </Slide>
+        </FormWrapper>
+        <SlideWrapper>
+          <Slide bill={this.state} />
+        </SlideWrapper>
 
       </Wrapper>
 
@@ -159,4 +156,4 @@ class BillNew extends Component {
   }
 }
 
-export default BillNew;
+export default New;

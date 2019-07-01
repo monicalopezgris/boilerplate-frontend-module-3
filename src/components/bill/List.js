@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { withAuth } from '../../lib/AuthProvider';
 import doc from '../../lib/doc-service';
-import BillListItem from './BillListItem';
+import ListItem from './ListItem';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -72,7 +72,7 @@ class BillList extends Component {
         {
           bills.map((bill) => {
             const { _id: id } = bill;
-            return <BillListItem key={id} itemData={bill} onDelete={this.onDelete} />;
+            return <ListItem key={id} itemData={bill} onDelete={this.onDelete} />;
           })
         }
         <LinkButton to="/bill/new"><Button type="button">+</Button></LinkButton>

@@ -24,7 +24,7 @@ const TableHeader = styled.tr`
 
 const BillSlideItems = ({ data }) => {
   const items = data || null;
-  // const { subtotal, total } = data;
+  const { subtotal, total } = data;
 
   if (items) {
     return (
@@ -45,14 +45,14 @@ const BillSlideItems = ({ data }) => {
                 item: itemName,
                 units,
                 priceUnit,
-                // totalPriceItem
+                totalPriceItem
               } = item;
               return (
                 <tr key={index}>
                   <Td>{itemName}</Td>
                   <Td>{units}</Td>
                   <Td>{priceUnit}€</Td>
-                  {/* <Td>{totalPriceItem}€</Td> */}
+                  <Td>{totalPriceItem}€</Td>
                 </tr>
               );
             })}
@@ -60,7 +60,7 @@ const BillSlideItems = ({ data }) => {
               <th />
               <th />
               <th>Subtotal</th>
-              {/* <th>{subtotal}€</th> */}
+              <th>{subtotal}€</th>
             </tr>
             <tr>
               <th />
@@ -72,7 +72,7 @@ const BillSlideItems = ({ data }) => {
               <th />
               <th />
               <th>Total</th>
-              {/* <th>{total}€</th> */}
+              <th>{total}€</th>
             </tr>
           </tbody>
         </table>

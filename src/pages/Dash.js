@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import BillList from '../components/bill/BillList';
+import List from '../components/bill/List';
 import ClientList from '../components/clients/ClientList';
 // import CompanyList from '../components/company/CompanyList';
 
@@ -19,7 +19,7 @@ const AuxList = styled.div`
 const Dash = () => (
   <>
     <MainList>
-      <BillList />
+      <List />
     </MainList>
     <AuxList>
       <ClientList />

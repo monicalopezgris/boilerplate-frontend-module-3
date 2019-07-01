@@ -28,7 +28,7 @@ const Button = styled.button`
   border:none;
 `;
 
-class BillListItem extends Component {
+class ListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -72,4 +72,4 @@ class BillListItem extends Component {
   }
 }
 
-export default withRouter(BillListItem);
+export default withRouter(ListItem);

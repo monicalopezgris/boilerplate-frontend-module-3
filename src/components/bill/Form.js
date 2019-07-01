@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-const Form = styled.form`
+const FormWrapper = styled.form`
   border: 1px solid red;
   display:flex;
   flex-direction:column;
@@ -30,7 +30,7 @@ const Input = styled.input`
 `;
 
 // eslint-disable-next-line react/prefer-stateless-function
-class NewDocForm extends Component {
+class Form extends Component {
   render() {
     const {
       onInputChange,
@@ -44,10 +44,9 @@ class NewDocForm extends Component {
     const {
       ref, name, cif, street, postalCode, streetNum, country, isClient, clients, selectedClient, items,
     } = state;
-    console.log(name)
 
     return (
-      <Form
+      <FormWrapper
         onChange={onInputChange}
         onSubmit={onSubmit}
       >
@@ -188,9 +187,9 @@ class NewDocForm extends Component {
           )}
         <button type="button" onClick={onAddObject}> Add item</button>
         <button type="submit">Send</button>
-      </Form>
+      </FormWrapper>
     );
   }
 }
 
-export default withRouter(NewDocForm);
+export default withRouter(Form);
