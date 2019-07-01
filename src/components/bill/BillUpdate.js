@@ -38,7 +38,7 @@ class BillUpdate extends Component {
       streetNum: undefined,
       postalCode: undefined,
       country: undefined,
-      objects: [],
+      items: [],
       error: false,
       isLoading: true,
     };
@@ -55,7 +55,6 @@ class BillUpdate extends Component {
       });
     }
     this.setStateClient(data);
-    console.log(this.state);
     const user = await auth.meData();
     const { clients } = user.data;
     this.setState({
@@ -90,12 +89,6 @@ class BillUpdate extends Component {
       },
       items,
     } = data.data;
-    // if (data.data.items) {
-    //   const { items } = data.data;
-    //   this.setState({
-    //     items,
-    //   });
-    // }
     this.setState({
       ref,
       name,
@@ -120,16 +113,16 @@ class BillUpdate extends Component {
 
   onAddObject = () => {
     this.setState(prevState => ({
-      objects: [...prevState.objects, { item: '', units: 0, priceUnit: 0 }],
+      items: [...prevState.items, { item: '', units: 0, priceUnit: 0 }],
     }));
   }
 
   onDeleteObject = (event) => {
-    const { objects } = this.state;
+    const { items } = this.state;
     const { dataset } = event.target;
-    objects.splice(dataset.id, 1);
+    items.splice(dataset.id, 1);
     this.setState({
-      objects,
+      items,
     });
   }
 
@@ -137,9 +130,9 @@ class BillUpdate extends Component {
     const { name, dataset } = event.target;
     if (dataset.id) {
       const { value } = event.target;
-      const objects = [...this.state.objects]
-      objects[dataset.id][name] = value;
-      this.setState({ objects });
+      const items = [...this.state.items]
+      items[dataset.id][name] = value;
+      this.setState({ items });
     } else {
       const { target } = event;
       const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -183,7 +176,6 @@ class BillUpdate extends Component {
             </Form>
             <Slide>
               <BillSlide bill={this.state} />
-              {/* <div>holi</div> */}
             </Slide>
           </Wrapper>
         );

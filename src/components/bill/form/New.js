@@ -42,7 +42,7 @@ class NewDocForm extends Component {
       state,
     } = this.props;
     const {
-      ref, name, cif, street, postalCode, streetNum, country, isClient, clients, selectedClient, objects,
+      ref, name, cif, street, postalCode, streetNum, country, isClient, clients, selectedClient, items,
     } = state;
     console.log(name)
 
@@ -132,8 +132,8 @@ class NewDocForm extends Component {
               />
             </>
           )}
-        {objects.length >= 0 ? (
-          objects.map((val, index) => {
+        {items.length >= 0 ? (
+          items.map((val, index) => {
             const itemIndex = `item-${index}`;
             const unitsIndex = `units-${index}`;
             const priceUnitIndex = `priceUnits-${index}`;
@@ -148,7 +148,7 @@ class NewDocForm extends Component {
                   name="item"
                   data-id={index}
                   id={itemIndex}
-                  defaultValue={objects[index].item}
+                  defaultValue={items[index].item}
                 />
                 <br />
                 <label htmlFor={unitsIndex}>
@@ -159,7 +159,7 @@ class NewDocForm extends Component {
                   name="units"
                   data-id={index}
                   id={unitsIndex}
-                  defaultValue={objects[index].units}
+                  defaultValue={items[index].units}
                 />
                 <br />
                 <label htmlFor={priceUnitIndex}>
@@ -170,7 +170,7 @@ class NewDocForm extends Component {
                   name="priceUnit"
                   data-id={index}
                   id={priceUnitIndex}
-                  defaultValue={objects[index].priceUnits}
+                  defaultValue={items[index].priceUnit}
                 />
                 <button
                   type="button"
