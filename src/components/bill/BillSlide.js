@@ -36,7 +36,7 @@ class BillSlide extends Component {
         postalCode,
         streetNum,
         country,
-        objects: items,
+        items,
       },
     } = this.props;
 
