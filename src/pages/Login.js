@@ -78,14 +78,14 @@ class Login extends Component {
           }}
           render={({ values }) => (
             <Formu>
-              <Label>Username</Label>
+              <Label>Username (demo: testing)</Label>
               <Fieldu
                 type="text"
                 name="username"
                 placeholder="username"
               />
               <ErrorMessage name="username" />
-              <Label>Password</Label>
+              <Label>Password (demo: testing)</Label>
               <Fieldu
                 type="password"
                 name="password"

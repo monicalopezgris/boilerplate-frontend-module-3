@@ -44,7 +44,7 @@ class ListItem extends Component {
       itemData: {
         _id: id,
         ref,
-        // updatedAt,
+        updatedAt,
         status,
         data: {
           client: {

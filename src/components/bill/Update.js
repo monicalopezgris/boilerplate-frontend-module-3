@@ -38,6 +38,7 @@ class Update extends Component {
       items: [],
       error: false,
       isLoading: true,
+      status: undefined,
     };
   }
 
@@ -51,51 +52,34 @@ class Update extends Component {
         isClient: false,
       });
     }
-    this.setStateClient(data);
+    const { data: { client: clientInfo } } = data;
+    this.setStateClient(clientInfo);
     const user = await auth.meData();
     const { clients } = user.data;
     this.setState({
       isLoading: false,
       clients,
     });
-
-  }
-
-  async componentDidUpdate(prevProps, prevState) {
-    const { selectedClient, isClient } = this.state;
-    const { selectedClient: prevSelectedClient } = prevState;
-    if (isClient && prevSelectedClient != selectedClient) {
-      const data = await client.getById(selectedClient);
-      await this.setStateClient(data);
-    }
   }
 
   setStateClient = (data) => {
     const {
-      status,
-      ref,
-      client: {
-        name,
-        cif,
-        address: {
-          street,
-          postalCode,
-          streetNum,
-          country,
-        },
+      name,
+      cif,
+      address: {
+        street,
+        postalCode,
+        streetNum,
+        country,
       },
-      items,
-    } = data.data;
+    } = data;
     this.setState({
-      ref,
       name,
       cif,
       street,
       postalCode,
       streetNum,
       country,
-      status,
-      items,
     });
   }
 
@@ -125,16 +109,24 @@ class Update extends Component {
 
   onInputChange = (event) => {
     const { name, dataset } = event.target;
+    const { value } = event.target;
     if (dataset.id) {
-      const { value } = event.target;
-      const items = [...this.state.items]
+      const items = [...this.state.items];
       items[dataset.id][name] = value;
       this.setState({ items });
+    } else if (name === 'selectedClient') {
+      const { isClient } = this.state;
+      if (isClient) {
+        client.getById(value)
+          .then(({ data }) => {
+            this.setStateClient(data);
+          });
+      }
     } else {
       const { target } = event;
-      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const targetValue = target.type === 'checkbox' ? target.checked : target.value;
       this.setState({
-        [name]: value,
+        [name]: targetValue,
       });
     }
   }

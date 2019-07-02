@@ -42,7 +42,7 @@ class Form extends Component {
       state,
     } = this.props;
     const {
-      ref, name, cif, street, postalCode, streetNum, country, isClient, clients, selectedClient, items,
+      ref, name, cif, street, postalCode, streetNum, country, isClient, clients, selectedClient, items, status,
     } = state;
 
     return (
@@ -67,6 +67,7 @@ class Form extends Component {
 
         {isClient ? (
           <select name="selectedClient" value={selectedClient} onChange={onInputChange}>
+            <option value={null}>Choose a client</option>
             {
               clients.map(
                 client => <option key={client._id} value={client._id}>{client.name}</option>,
@@ -138,7 +139,6 @@ class Form extends Component {
             const priceUnitIndex = `priceUnits-${index}`;
             return (
               <ObjectsWrapper key={index}>
-
                 <label htmlFor={itemIndex}>
                   Item
                 </label>
@@ -183,9 +183,13 @@ class Form extends Component {
             );
           })
         ) : (
-            <div />
+            <span />
           )}
         <button type="button" onClick={onAddObject}> Add item</button>
+        <select name="status" value={status} onChange={onInputChange}>
+          <option value="draft">Draft</option>
+          <option value="closed">Closed</option>
+        </select>
         <button type="submit">Send</button>
       </FormWrapper>
     );

@@ -2,11 +2,11 @@
 import ids from 'short-id';
 
 export const helper = {
-  getRef: (values) => {
+  getRef: () => {
     const initial = 'bill_';
     // eslint-disable-next-line no-param-reassign
-    values.ref = initial.concat(ids.generate());
-    return (values);
+    const ref = initial.concat(ids.generate());
+    return (ref);
   },
   calcTaxes: (items) => {
     const { subtotal } = items;

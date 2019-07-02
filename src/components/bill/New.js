@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import Slide from './slide/Slide';
 import { helper } from '../../lib/helpers';
 import Form from './Form';
+import Loading from '../Loading';
 import doc from '../../lib/doc-service';
 import auth from '../../lib/auth-service';
 import client from '../../lib/client-service';
+import ErrorPage from '../../pages/Error';
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,14 +38,20 @@ class New extends Component {
       postalCode: undefined,
       country: undefined,
       items: [],
+      error: false,
+      isLoading: true,
+      status: undefined,
     };
   }
 
   async componentDidMount() {
     const user = await auth.meData();
+    const ref = await helper.getRef();
     const { clients } = user.data;
     this.setState({
+      isLoading: false,
       clients,
+      ref,
     });
   }
 
@@ -120,9 +128,7 @@ class New extends Component {
     event.preventDefault();
     try {
       const { history } = this.props;
-      let values = this.state;
-      values = await helper.getRef(values);
-      const result = await doc.add(values);
+      const result = await doc.add(this.state);
       const { _id: id } = result;
       history.push(`/bill/${id}`);
     } catch (error) {
@@ -133,27 +139,34 @@ class New extends Component {
   }
 
   render() {
-    return (
-      <Wrapper>
-        <FormWrapper>
-          <Form
-            state={this.state}
-            onInputChange={this.onInputChange}
-            onSubmit={this.onSubmit}
-            onAddObject={this.onAddObject}
-            onDeleteObject={this.onDeleteObject}
-            onIsClient={this.onIsClient}
-            onClientSelect={this.onClientSelect}
-          />
-        </FormWrapper>
-        <SlideWrapper>
-          <Slide bill={this.state} />
-        </SlideWrapper>
+    const { isLoading, error } = this.state;
+    if (!error) {
+      if (!isLoading) {
+        return (
+          <Wrapper>
+            <FormWrapper>
+              <Form
+                state={this.state}
+                onInputChange={this.onInputChange}
+                onSubmit={this.onSubmit}
+                onAddObject={this.onAddObject}
+                onDeleteObject={this.onDeleteObject}
+                onIsClient={this.onIsClient}
+                onClientSelect={this.onClientSelect}
+              />
+            </FormWrapper>
+            <SlideWrapper>
+              <Slide bill={this.state} />
+            </SlideWrapper>
 
-      </Wrapper>
-
-    );
+          </Wrapper>
+        );
+      }
+      return <Loading />;
+    }
+    return <ErrorPage />;
   }
 }
+
 
 export default New;
