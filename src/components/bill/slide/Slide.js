@@ -5,6 +5,7 @@ import { helper } from '../../../lib/helpers';
 import ClientPart from './ClientPart';
 import ItemsPart from './ItemsPart';
 import InfoPart from './InfoPart';
+import ErrorBoundary from '../../../lib/ErrorBoundary';
 
 const Bill = styled.div`
 padding:2rem;
@@ -44,7 +45,6 @@ class Slide extends Component {
       helper.calcSubtotal(items, helper.getSum(items.total));
       helper.calcTaxes(items);
     };
-
     return (
       <>
         <PDFExport
@@ -66,4 +66,4 @@ class Slide extends Component {
   }
 }
 
-export default Slide;
+export default ErrorBoundary(Slide);

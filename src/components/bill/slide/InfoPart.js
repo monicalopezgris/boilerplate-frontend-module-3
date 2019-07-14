@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ErrorBoundary from '../../../lib/ErrorBoundary';
 
 const BillSlideInfo = ({ data: ref }) => {
   return (
@@ -12,4 +12,4 @@ const BillSlideInfo = ({ data: ref }) => {
   );
 };
 
-export default BillSlideInfo;
+export default ErrorBoundary(BillSlideInfo);

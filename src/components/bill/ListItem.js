@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-// import Moment from 'react-moment';
 import styled from 'styled-components';
+import ErrorBoundary from '../../lib/ErrorBoundary';
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,7 +44,6 @@ class ListItem extends Component {
       itemData: {
         _id: id,
         ref,
-        updatedAt,
         status,
         data: {
           client: {
@@ -53,18 +52,12 @@ class ListItem extends Component {
         },
       },
     } = this.props;
-
     return (
       <Wrapper>
         <WrapperAsLink to={`/bill/${id}`}>
           <Span>{ref}</Span>
           <Span>{name}</Span>
           <Span>{status}</Span>
-          {/* <Span>
-            <Moment format="DD/MM/YYYY LT">
-              {updatedAt}
-            </Moment>
-          </Span> */}
         </WrapperAsLink>
         <Button type="button" onClick={() => { this.handleDelete(id); }}> X </Button>
       </Wrapper>
@@ -72,4 +65,4 @@ class ListItem extends Component {
   }
 }
 
-export default withRouter(ListItem);
+export default ErrorBoundary(withRouter(ListItem));

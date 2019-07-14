@@ -36,7 +36,6 @@ class Update extends Component {
       postalCode: undefined,
       country: undefined,
       items: [],
-      error: false,
       isLoading: true,
       status: undefined,
     };
@@ -52,7 +51,7 @@ class Update extends Component {
         isClient: false,
       });
     }
-    const { data: { client: clientInfo, items }, status } = data;
+    const { data: { client: clientInfo, items }, status, ref } = data;
     this.setStateClient(clientInfo);
     this.setStateItems(items);
     const user = await auth.meData();
@@ -61,6 +60,7 @@ class Update extends Component {
       isLoading: false,
       clients,
       status,
+      ref,
     });
   }
 
@@ -149,41 +149,36 @@ class Update extends Component {
       const { _id: id } = result;
       history.push(`/bill/${id}`);
     } catch (error) {
-      this.setState({
-        error: 'Ops.... Get in touch with the admin to solve the error',
-      });
+      throw new Error("Whoops!");
     }
   }
 
   render() {
-    const { isLoading, error, status } = this.state;
-    if (!error) {
-      if (!isLoading) {
-        return (
-          <Wrapper>
-            {status == "draft"
-              ? (
-                <FormWrapper>
-                  <Form
-                    state={this.state}
-                    onInputChange={this.onInputChange}
-                    onSubmit={this.onSubmit}
-                    onAddObject={this.onAddObject}
-                    onDeleteObject={this.onDeleteObject}
-                    onIsClient={this.onIsClient}
-                  />
-                </FormWrapper>
-              )
-              : <span />}
-            <SlideWrapper>
-              <Slide bill={this.state} />
-            </SlideWrapper>
-          </Wrapper>
-        );
-      }
-      return <Loading />;
+    const { isLoading, status } = this.state;
+    if (!isLoading) {
+      return (
+        <Wrapper>
+          {status == "draft"
+            ? (
+              <FormWrapper>
+                <Form
+                  state={this.state}
+                  onInputChange={this.onInputChange}
+                  onSubmit={this.onSubmit}
+                  onAddObject={this.onAddObject}
+                  onDeleteObject={this.onDeleteObject}
+                  onIsClient={this.onIsClient}
+                />
+              </FormWrapper>
+            )
+            : <span />}
+          <SlideWrapper>
+            <Slide bill={this.state} />
+          </SlideWrapper>
+        </Wrapper>
+      );
     }
-    return <ErrorPage />;
+    return <Loading />;
   }
 }
 

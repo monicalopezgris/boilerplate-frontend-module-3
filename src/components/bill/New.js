@@ -8,7 +8,7 @@ import Loading from '../Loading';
 import doc from '../../lib/doc-service';
 import auth from '../../lib/auth-service';
 import client from '../../lib/client-service';
-import ErrorPage from '../../pages/Error';
+import ErrorBoundary from '../../lib/ErrorBoundary';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,7 +38,6 @@ class New extends Component {
       postalCode: undefined,
       country: undefined,
       items: [],
-      error: false,
       isLoading: true,
       status: undefined,
     };
@@ -131,42 +130,37 @@ class New extends Component {
       const result = await doc.add(this.state);
       const { _id: id } = result;
       history.push(`/bill/${id}`);
-    } catch (error) {
-      this.setState({
-        error: 'Ops.... Get in touch with the admin to solve the error',
-      });
+    } catch (e) {
+      throw new Error('Whoops!');
     }
   }
 
   render() {
-    const { isLoading, error } = this.state;
-    if (!error) {
-      if (!isLoading) {
-        return (
-          <Wrapper>
-            <FormWrapper>
-              <Form
-                state={this.state}
-                onInputChange={this.onInputChange}
-                onSubmit={this.onSubmit}
-                onAddObject={this.onAddObject}
-                onDeleteObject={this.onDeleteObject}
-                onIsClient={this.onIsClient}
-                onClientSelect={this.onClientSelect}
-              />
-            </FormWrapper>
-            <SlideWrapper>
-              <Slide bill={this.state} />
-            </SlideWrapper>
+    const { isLoading } = this.state;
+    if (!isLoading) {
+      return (
+        <Wrapper>
+          <FormWrapper>
+            <Form
+              state={this.state}
+              onInputChange={this.onInputChange}
+              onSubmit={this.onSubmit}
+              onAddObject={this.onAddObject}
+              onDeleteObject={this.onDeleteObject}
+              onIsClient={this.onIsClient}
+              onClientSelect={this.onClientSelect}
+            />
+          </FormWrapper>
+          <SlideWrapper>
+            <Slide bill={this.state} />
+          </SlideWrapper>
 
-          </Wrapper>
-        );
-      }
-      return <Loading />;
+        </Wrapper>
+      );
     }
-    return <ErrorPage />;
+    return <Loading />;
   }
 }
 
 
-export default New;
+export default ErrorBoundary(New);

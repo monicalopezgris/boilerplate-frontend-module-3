@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ErrorBoundary from '../../../lib/ErrorBoundary';
 
 const Clients = styled.div`
   margin-top:3rem;
@@ -35,4 +36,4 @@ const BillSlideClient = ({ data }) => {
   );
 };
 
-export default BillSlideClient;
+export default ErrorBoundary(BillSlideClient);

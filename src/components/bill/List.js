@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { withAuth } from '../../lib/AuthProvider';
 import doc from '../../lib/doc-service';
 import ListItem from './ListItem';
+import ErrorBoundary from '../../lib/ErrorBoundary';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -50,8 +51,12 @@ class BillList extends Component {
   }
 
   getBills = async () => {
-    const bills = await doc.get();
-    this.setState({ bills: bills.data });
+    try {
+      const bills = await doc.get();
+      this.setState({ bills: bills.data });
+    } catch (e) {
+      throw new Error('¡Whooops!');
+    }
   }
 
   onDelete = (id) => {
@@ -81,4 +86,4 @@ class BillList extends Component {
   }
 }
 
-export default withAuth(BillList);
+export default ErrorBoundary(withAuth(BillList));

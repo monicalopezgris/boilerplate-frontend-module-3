@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ErrorBoundary from '../../../lib/ErrorBoundary';
 
 const Items = styled.div`
   margin-top:3rem;
@@ -84,4 +85,4 @@ const BillSlideItems = ({ data }) => {
   return <div />;
 };
 
-export default BillSlideItems;
+export default ErrorBoundary(BillSlideItems);

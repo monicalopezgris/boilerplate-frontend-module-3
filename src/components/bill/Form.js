@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
+import ErrorBoundary from '../../lib/ErrorBoundary';
 
 const FormWrapper = styled.form`
   display:flex;
@@ -194,4 +195,4 @@ class Form extends Component {
   }
 }
 
-export default withRouter(Form);
+export default ErrorBoundary(withRouter(Form));

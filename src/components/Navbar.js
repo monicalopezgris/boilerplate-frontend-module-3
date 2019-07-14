@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { withAuth } from '../lib/AuthProvider';
+import ErrorBoundary from '../lib/ErrorBoundary';
 
 const Navbar = styled.div`
   background-color: ${props => props.theme.color.primaryColor};
@@ -108,4 +109,4 @@ class NavBar extends Component {
   }
 }
 
-export default withAuth(NavBar);
+export default ErrorBoundary(withAuth(NavBar));
