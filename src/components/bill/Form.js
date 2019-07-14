@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 const FormWrapper = styled.form`
-  border: 1px solid red;
   display:flex;
   flex-direction:column;
 `;
@@ -38,7 +37,6 @@ class Form extends Component {
       onAddObject,
       onDeleteObject,
       onIsClient,
-      onClientSelect,
       state,
     } = this.props;
     const {

@@ -52,13 +52,21 @@ class Update extends Component {
         isClient: false,
       });
     }
-    const { data: { client: clientInfo } } = data;
+    const { data: { client: clientInfo, items }, status } = data;
     this.setStateClient(clientInfo);
+    this.setStateItems(items);
     const user = await auth.meData();
     const { clients } = user.data;
     this.setState({
       isLoading: false,
       clients,
+      status,
+    });
+  }
+
+  setStateItems = (items) => {
+    this.setState({
+      items,
     });
   }
 
@@ -148,21 +156,25 @@ class Update extends Component {
   }
 
   render() {
-    const { isLoading, error } = this.state;
+    const { isLoading, error, status } = this.state;
     if (!error) {
       if (!isLoading) {
         return (
           <Wrapper>
-            <FormWrapper>
-              <Form
-                state={this.state}
-                onInputChange={this.onInputChange}
-                onSubmit={this.onSubmit}
-                onAddObject={this.onAddObject}
-                onDeleteObject={this.onDeleteObject}
-                onIsClient={this.onIsClient}
-              />
-            </FormWrapper>
+            {status == "draft"
+              ? (
+                <FormWrapper>
+                  <Form
+                    state={this.state}
+                    onInputChange={this.onInputChange}
+                    onSubmit={this.onSubmit}
+                    onAddObject={this.onAddObject}
+                    onDeleteObject={this.onDeleteObject}
+                    onIsClient={this.onIsClient}
+                  />
+                </FormWrapper>
+              )
+              : <span />}
             <SlideWrapper>
               <Slide bill={this.state} />
             </SlideWrapper>

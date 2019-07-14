@@ -107,7 +107,7 @@ class New extends Component {
       const items = [...this.state.items];
       items[dataset.id][name] = value;
       this.setState({ items });
-    } else if (name == 'selectedClient') {
+    } else if (name === 'selectedClient') {
       const { isClient } = this.state;
       if (isClient) {
         client.getById(value)
