@@ -9,8 +9,9 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dash from './pages/Dash';
 import ErrorPage from './pages/Error';
-import New from './components/bill/New';
-import Update from './components/bill/Update';
+import BillNew from './components/bill/New';
+import BillUpdate from './components/bill/Update';
+import ClientUpdate from './components/clients/Update';
 
 import PrivateRoute from './components/PrivateRoute';
 import AnonRoute from './components/AnonRoute';
@@ -33,8 +34,9 @@ class App extends Component {
               <Switch>
                 <AnonRoute exact path="/signup" component={Signup} />
                 <AnonRoute exact path="/login" component={Login} />
-                <PrivateRoute exact path="/bill/new" component={New} />
-                <PrivateRoute path="/bill/:id" component={Update} />
+                <PrivateRoute exact path="/bill/new" component={BillNew} />
+                <PrivateRoute path="/bill/:id" component={BillUpdate} />
+                <PrivateRoute path="/client/:id" component={ClientUpdate} />
                 <PrivateRoute exact path="/" component={Dash} />
                 <PrivateRoute path="/" component={ErrorPage} />
               </Switch>
