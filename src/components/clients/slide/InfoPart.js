@@ -1,14 +1,31 @@
 import React from 'react';
+import styled from 'styled-components';
 import ErrorBoundary from '../../../lib/ErrorBoundary';
 
-const BillSlideInfo = ({ data: ref }) => {
+const Wrapper = styled.div`
+  margin-top:3rem;
+  display:flex;
+  justify-content:space-around;
+  `;
+const Title = styled.h2`
+  margin-top:3rem;
+  margin-bottom:2rem;
+  font-family: Arial;
+  font-size: 2.5rem;
+  `;
+
+const BillSlideInfo = ({ data: { name, cif, street, streetNum, postalCode, country } }) => {
   return (
-    <div>
+    <Wrapper>
       <div>
-        <img alt="logo" src="/logo.png" />
-        <p>Ref: {ref}</p>
+        <Title>{name}</Title>
+        <p>{cif}</p>
+        <p>{street}, {streetNum}</p>
+        <p>{postalCode}, {country}</p>
+        <p></p>
       </div>
-    </div >
+      <img alt="logo" src="/logo.png" />
+    </Wrapper>
   );
 };
 

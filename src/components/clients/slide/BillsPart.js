@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import doc from '../../../lib/doc-service';
 import ErrorBoundary from '../../../lib/ErrorBoundary';
 
 const Items = styled.div`
@@ -22,67 +23,62 @@ const TableHeader = styled.tr`
   // text-transform: uppercase;
   background-color:${props => props.theme.color.primaryColor};
 `;
-
-const BillSlideItems = ({ data }) => {
-  const items = data || null;
-  const { subtotal, total } = data;
-
-  if (items) {
-    return (
-      <Items>
-        <Header>Items</Header>
-        <table>
-          <thead>
-            <TableHeader>
-              <th>Item</th>
-              <th>Units</th>
-              <th>Price units</th>
-              <th>Price</th>
-            </TableHeader>
-          </thead>
-          <tbody>
-            {items.map((item, index) => {
-              const {
-                item: itemName,
-                units,
-                priceUnit,
-                totalPriceItem
-              } = item;
-              return (
-                <tr key={index}>
-                  <Td>{itemName}</Td>
-                  <Td>{units}</Td>
-                  <Td>{priceUnit}€</Td>
-                  <Td>{totalPriceItem}€</Td>
-                </tr>
-              );
-            })}
-            <tr>
-              <th />
-              <th />
-              <th>Subtotal</th>
-              <th>{subtotal}€</th>
-            </tr>
-            <tr>
-              <th />
-              <th />
-              <th>Iva</th>
-              <th>21%</th>
-            </tr>
-            <tr>
-              <th />
-              <th />
-              <th>Total</th>
-              <th>{total}€</th>
-            </tr>
-          </tbody>
-        </table>
-      </Items>
-    );
-
-
+class BillSlideItems extends Component {
+  state = {
+    bills: [],
   }
-  return <div />;
-};
+
+  componentDidMount() {
+    this.getBills();
+  }
+
+  getBills = async () => {
+    try {
+      const bills = await doc.getByClient('B23232323');
+      this.setState({ bills: bills.data });
+    } catch (e) {
+      throw new Error('¡Whooops!');
+    }
+  }
+
+  render() {
+    const { bills } = this.state;
+    if (bills.length > 0) {
+      return (
+        <Items>
+          <Header>Bills</Header>
+          <table>
+            <thead>
+              <TableHeader>
+                <th>Ref</th>
+                <th>Status</th>
+                <th>Last update</th>
+              </TableHeader>
+            </thead>
+            <tbody>
+              {bills.map((bill, index) => {
+                const {
+                  ref,
+                  status,
+                  updatedAt,
+                } = bill;
+                return (
+                  <tr key={index}>
+                    <Td>{ref}</Td>
+                    <Td>{status}</Td>
+                    <Td>{updatedAt}</Td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </Items>
+      );
+    }
+    return (
+      <p>aa</p>
+    );
+  }
+}
 
 export default ErrorBoundary(BillSlideItems);

@@ -24,6 +24,14 @@ class DocService {
       });
   }
 
+  getByClient(id) {
+    return this.api.get(`/doc/client/${id}`)
+      .then(({ data }) => ({ data }))
+      .catch((error) => {
+        throw new Error('I crashed!');
+      });
+  }
+
   add(inputData) {
     return this.api.post('/doc', inputData)
       .then(({ data }) => data);

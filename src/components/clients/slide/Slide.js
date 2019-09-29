@@ -1,64 +1,26 @@
 import React, { Component } from 'react';
-import { PDFExport } from '@progress/kendo-react-pdf';
 import styled from 'styled-components';
 import { helper } from '../../../lib/helpers';
 import InfoPart from './InfoPart';
 import BillsPart from './BillsPart';
 import ErrorBoundary from '../../../lib/ErrorBoundary';
 
-const Bill = styled.div`
-padding:2rem;
-`;
-
-const Button = styled.button`
- border:none;
- background-color:${props => props.theme.color.primaryColor};
- height:3rem;
- width:3rem;
- border-radius:50%;
- color:white;
- font-weight: bold;
-`;
-
 class Slide extends Component {
-
-  exportPDF = () => {
-    this.bill.save();
-  };
-
   render() {
     const {
-      bill: {
-        ref,
+      data: {
         name,
         cif,
         street,
         postalCode,
         streetNum,
         country,
-        items,
       },
     } = this.props;
-    if (items.length > 0) {
-      helper.calcItemTotalPrice(items);
-      helper.calcSubtotal(items, helper.getSum(items.total));
-      helper.calcTaxes(items);
-    };
     return (
       <>
-        <PDFExport
-          paperSize="A4"
-          fileName="bill.pdf"
-          eslint-disable-next-line
-          no-return-assign
-          ref={r => this.bill = r}
-        >
-          <Bill>
-            <InfoPart data={ref} />
-            <BillsPart data={{ name, cif, street, streetNum, postalCode, country }} />
-          </Bill>
-        </PDFExport>
-        <Button type="button" onClick={this.exportPDF}>PDF</Button>
+        <InfoPart data={{ name, cif, street, streetNum, postalCode, country }} />
+        <BillsPart />
       </>
     );
   }

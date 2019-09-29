@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import Slide from './slide/Slide';
+import Slide from './slide/Slide';
 // import Form from './Form';
 import Loading from '../Loading';
 import { helper } from '../../lib/helpers';
@@ -56,7 +56,6 @@ class Update extends Component {
       country,
       isLoading: false,
     });
-    console.log(this.state)
   }
 
   setStateItems = (items) => {
@@ -153,7 +152,6 @@ class Update extends Component {
     if (!isLoading) {
       return (
         <Wrapper>
-
           <FormWrapper>
             <p>Form</p>
             {/* <Form
@@ -168,7 +166,7 @@ class Update extends Component {
 
           <SlideWrapper>
             <p>Slide</p>
-            {/* <Slide bill={this.state} /> */}
+            <Slide data={this.state} />
           </SlideWrapper>
         </Wrapper>
       );
