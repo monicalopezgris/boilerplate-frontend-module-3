@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Slide from './slide/Slide';
-// import Form from './Form';
+import Form from './Form';
 import Loading from '../Loading';
 import { helper } from '../../lib/helpers';
 import doc from '../../lib/doc-service';
@@ -25,10 +25,7 @@ class Update extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isClient: true,
-      items: [],
       isLoading: true,
-      status: undefined,
     };
   }
 
@@ -58,12 +55,6 @@ class Update extends Component {
     });
   }
 
-  setStateItems = (items) => {
-    this.setState({
-      items,
-    });
-  }
-
   setStateClient = (data) => {
     const {
       name,
@@ -85,53 +76,13 @@ class Update extends Component {
     });
   }
 
-  onIsClient = () => {
-    const { isClient } = this.state;
-    if (isClient) {
-      this.setState({
-        selectedClient: undefined,
-      });
-    }
-  }
-
-  onAddObject = () => {
-    this.setState(prevState => ({
-      items: [...prevState.items, { item: '', units: 0, priceUnit: 0 }],
-    }));
-  }
-
-  onDeleteObject = (event) => {
-    const { items } = this.state;
-    const { dataset } = event.target;
-    items.splice(dataset.id, 1);
+  onInputChange = (event) => {
+    const { target, target: { name } } = event;
+    const targetValue = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({
-      items,
+      [name]: targetValue,
     });
   }
-
-  // onInputChange = (event) => {
-  //   const { name, dataset } = event.target;
-  //   const { value } = event.target;
-  //   if (dataset.id) {
-  //     const items = [...this.state.items];
-  //     items[dataset.id][name] = value;
-  //     this.setState({ items });
-  //   } else if (name === 'selectedClient') {
-  //     const { isClient } = this.state;
-  //     if (isClient) {
-  //       client.getById(value)
-  //         .then(({ data }) => {
-  //           this.setStateClient(data);
-  //         });
-  //     }
-  //   } else {
-  //     const { target } = event;
-  //     const targetValue = target.type === 'checkbox' ? target.checked : target.value;
-  //     this.setState({
-  //       [name]: targetValue,
-  //     });
-  //   }
-  // }
 
   onSubmit = async (event) => {
     event.preventDefault();
@@ -153,19 +104,15 @@ class Update extends Component {
       return (
         <Wrapper>
           <FormWrapper>
-            <p>Form</p>
-            {/* <Form
-                  state={this.state}
-                  onInputChange={this.onInputChange}
-                  onSubmit={this.onSubmit}
-                  onAddObject={this.onAddObject}
-                  onDeleteObject={this.onDeleteObject}
-                  onIsClient={this.onIsClient}
-                /> */}
+            <p>Edit client</p>
+            <Form
+              state={this.state}
+              onInputChange={this.onInputChange}
+              onSubmit={this.onSubmit}
+            />
           </FormWrapper>
 
           <SlideWrapper>
-            <p>Slide</p>
             <Slide data={this.state} />
           </SlideWrapper>
         </Wrapper>
